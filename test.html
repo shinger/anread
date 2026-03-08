@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文字选中弹出菜单</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        padding: 40px;
+        line-height: 1.8;
+        background: #f5f5f5;
+      }
+
+      .content {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 28px;
+      }
+
+      p {
+        color: #666;
+        margin-bottom: 16px;
+        font-size: 16px;
+      }
+
+      .highlight {
+        background-color: #ffeb3b;
+        padding: 2px 0;
+      }
+
+      #popup {
+        position: absolute;
+        display: none;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        padding: 8px;
+        z-index: 1000;
+        min-width: 120px;
+      }
+
+      #popup.show {
+        display: block;
+      }
+
+      .popup-item {
+        padding: 10px 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+        font-size: 14px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .popup-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .popup-item:active {
+        background-color: #e0e0e0;
+      }
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .tip {
+        text-align: center;
+        color: #999;
+        font-size: 14px;
+        margin-top: 30px;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1>文字选中弹出菜单示例</h1>
+      <p>请选中下面的文字，会弹出操作菜单，您可以选择复制或高亮显示。</p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat.
+      </p>
+      <p>
+        这是一段中文示例文字。选中任意文字后，会在光标附近弹出一个小菜单。
+        您可以选择复制文字到剪贴板，或者用黄色高亮标记重要内容。
+        试着选中这段文字体验一下吧！
+      </p>
+      <p>
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+      <p class="tip">💡 提示：选中文字后会自动弹出操作菜单</p>
+    </div>
+
+    <div id="popup">
+      <div class="popup-item" id="copyBtn">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path
+            d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+          ></path>
+        </svg>
+        复制
+      </div>
+      <div class="popup-item" id="highlightBtn">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M9 11l3 3L22 4"></path>
+          <path
+            d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+          ></path>
+        </svg>
+        高亮
+      </div>
+    </div>
+
+    <script>
+      const popup = document.getElementById("popup");
+      const copyBtn = document.getElementById("copyBtn");
+      const highlightBtn = document.getElementById("highlightBtn");
+      let currentSelection = null;
+      let currentRange = null;
+
+      // 监听文字选择
+      document.addEventListener("mouseup", function (e) {
+        setTimeout(() => {
+          console.log("mouse up...");
+          const selection = window.getSelection();
+          const selectedText = selection.toString().trim();
+
+          if (selectedText.length > 0) {
+            currentSelection = selection;
+            currentRange = selection.getRangeAt(0);
+            showPopup(e.clientX, e.clientY);
+          } else {
+            hidePopup();
+          }
+        }, 10);
+      });
+
+      // 点击其他地方隐藏popup
+      document.addEventListener("mousedown", function (e) {
+        if (!popup.contains(e.target)) {
+          hidePopup();
+        }
+      });
+
+      // 显示popup
+      function showPopup(x, y) {
+        popup.style.left = x + "px";
+        popup.style.top = y + 10 + "px";
+        popup.classList.add("show");
+      }
+
+      // 隐藏popup
+      function hidePopup() {
+        popup.classList.remove("show");
+      }
+
+      // 复制功能
+      copyBtn.addEventListener("click", function () {
+        const text = currentSelection.toString();
+
+        // 使用现代API复制
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(text)
+            .then(() => {
+              showFeedback("已复制到剪贴板！");
+            })
+            .catch(() => {
+              fallbackCopy(text);
+            });
+        } else {
+          fallbackCopy(text);
+        }
+
+        hidePopup();
+      });
+
+      // 备用复制方法
+      function fallbackCopy(text) {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          showFeedback("已复制到剪贴板！");
+        } catch (err) {
+          showFeedback("复制失败，请手动复制");
+        }
+        document.body.removeChild(textarea);
+      }
+
+      // 高亮功能
+      highlightBtn.addEventListener("click", function () {
+        if (currentRange) {
+          const span = document.createElement("span");
+          span.className = "highlight";
+
+          try {
+            currentRange.surroundContents(span);
+            showFeedback("已高亮显示！");
+          } catch (e) {
+            // 如果选区跨越多个元素，使用另一种方法
+            const fragment = currentRange.extractContents();
+            span.appendChild(fragment);
+            currentRange.insertNode(span);
+            showFeedback("已高亮显示！");
+          }
+        }
+
+        hidePopup();
+        window.getSelection().removeAllRanges();
+      });
+
+      // 显示操作反馈
+      function showFeedback(message) {
+        const feedback = document.createElement("div");
+        feedback.textContent = message;
+        feedback.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #333;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 4px;
+                font-size: 14px;
+                z-index: 2000;
+                animation: fadeInOut 2s ease-in-out;
+            `;
+
+        document.body.appendChild(feedback);
+
+        setTimeout(() => {
+          document.body.removeChild(feedback);
+        }, 2000);
+      }
+
+      // 添加淡入淡出动画
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+                10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            }
+        `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

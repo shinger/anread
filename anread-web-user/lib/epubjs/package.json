@@ -1,0 +1,25 @@
+{
+  "name": "epubjs",
+  "version": "0.4.0",
+  "description": "Parse and Render Epubs",
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "types": "types/index.d.ts",
+  "repository": "https://github.com/futurepress/epub.js",
+  "directories": {
+    "test": "test"
+  },
+  "author": "fchasen@gmail.com",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "@types/localforage": "0.0.34",
+    "@xmldom/xmldom": "^0.7.5",
+    "core-js": "^3.18.3",
+    "event-emitter": "^0.3.5",
+    "jszip": "^3.7.1",
+    "localforage": "^1.10.0",
+    "lodash": "^4.17.21",
+    "marks-pane": "^1.0.9",
+    "path-webpack": "0.0.3"
+  }
+}

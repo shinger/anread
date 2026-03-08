@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="242ea08a-61cb-4f3c-b7ad-1603d5944d5b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/AnreadAdminApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/AnreadServerApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/mapper/BookShelfMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/resources/mapper/BookMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/AnyueAdminApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/config/MybatisPlusConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/config/MybatisPlusConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/handler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/handler/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/mapper/BookMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/mapper/BookMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/mapper/CategoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/mapper/CategoryMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/mapper/FileMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/mapper/FileMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/service/impl/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anyue/admin/vo/BookVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/java/com/anread/admin/vo/BookVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/resources/mapper/BookMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/main/resources/mapper/BookMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/test/java/com/anyue/admin/AnyueAdminApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/test/java/com/anread/admin/AnyueAdminApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-admin-server/src/test/java/com/anyue/admin/mapper/BookMapperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-admin-server/src/test/java/com/anread/admin/mapper/BookMapperTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/AnyueServerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/controller/BookShelfController.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/controller/BookShelfController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/controller/ReadingRecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/controller/ReadingRecordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/controller/RecommendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/controller/RecommendController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/controller/UploadController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/dto/FileDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/dto/ReadingRecordDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/dto/UserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/entity/ReadingRecord.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/entity/UserShelf.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/interceptor/InterceptorConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/interceptor/InterceptorConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/interceptor/JWTInterceptors.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/interceptor/JWTInterceptors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/mapper/BookMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/mapper/BookMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/mapper/CategoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/mapper/CategoryMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/mapper/FileMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/mapper/FileMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/mapper/GeneralFileMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/mapper/GeneralFileMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/mapper/ReadingRecordMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/mapper/ReadingRecordMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/mapper/UserShelfMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/mapper/UserShelfMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/BookShelfService.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/BookShelfService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/ReadingRecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/ReadingRecordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/RecommendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/RecommendService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/UploadService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/impl/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/impl/BookShelfServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/impl/BookShelfServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/impl/ReadingRecordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/impl/ReadingRecordServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/impl/RecommendServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/impl/RecommendServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/impl/UploadServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/utils/EpublibUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/utils/EpublibUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/utils/MinioUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/utils/MinioUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/utils/ThreadLocalUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anread/server/utils/ThreadLocalUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/vo/ReadingRecordVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/java/com/anyue/server/vo/UserVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-server/anread-web-server/src/test/java/com/anyue/server/AnyueServerApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/anread-server/anread-web-server/src/test/java/com/anread/server/AnyueServerApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/config/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/components/DialogAddCategory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/components/DialogAddCategory.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/components/DialogAddGood.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/components/DialogAddSwiper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/components/DialogAddSwiper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/styles/element/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/styles/element/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/utils/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/utils/axios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/utils/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/utils/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/views/AddGood.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/views/Category.vue" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/views/Category.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/views/Good.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/views/IndexConfig.vue" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/views/IndexConfig.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/views/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/src/views/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/src/views/Swiper.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/vite.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-admin/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-admin/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/documentation/md/API.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/ajax-loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/annotator.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/archived.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/contents.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/continuous-scrolled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/continuous-spreads.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/embedded.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/examples.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/highlights.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/hooks.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/hypothesis-continuous.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/hypothesis-spreads.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/hypothesis.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/hypothesis.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/hypothesis.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/input.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/legacy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/locations.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/manifest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/marks.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/mathml.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/offline.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/renderless.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/scrolled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/single-full.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/spreads.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/swipe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/themes.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/themes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/examples/toc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/archive.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/archive.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/book.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/book.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/managers/default/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/managers/default/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/managers/views/iframe.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/managers/views/iframe.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/rendition.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/rendition.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/section.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/section.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/spine.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/src/spine.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/book.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/core.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/epub.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/epubcfi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice.epub" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/META-INF/container.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_001.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_002.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_003.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_004.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_005.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_006.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_007.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_008.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_009.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/chapter_010.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/cover.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/css/stylesheet.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/cover_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i001_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i002_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i003_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i004_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i005_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i006_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i007_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i008_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i009_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i010_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i011_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i012_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i013_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i014_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i015_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i016_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i017_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i018_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i019_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i020_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/i022_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/ii021_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/plate01_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/plate02_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/plate03_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/plate04_th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/images/title.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/package.opf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/titlepage.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/OPS/toc.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice/mimetype" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/alice_without_cover.epub" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/chapter1-highlights.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/chapter1.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/highlight.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/fixtures/locations.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/locations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/old/epub.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/old/rendering.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/test/section.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/lib/epubjs/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/lib/epubjs/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/public/anyue-logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/src/assets/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/src/assets/base.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/src/assets/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/src/assets/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/anread-web-user/src/views/BookView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/anread-web-user/src/views/BookView.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/anread-server" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="34r6tFRjF1XvJqgebgJNRmmLG0i" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/Projects/Anread/anread-server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.117" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.117" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="242ea08a-61cb-4f3c-b7ad-1603d5944d5b" name="Changes" comment="" />
+      <created>1761959556812</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761959556812</updated>
+      <workItem from="1761959558236" duration="46000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

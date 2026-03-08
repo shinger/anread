@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/anread-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/anread-server/anread-admin-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/anread-server/anread-web-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/anread-web-admin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/anread-web-user" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/anread-web-user/lib/epubjs" vcs="Git" />
+  </component>
+</project>

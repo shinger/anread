@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.anread.book.mapper.BookCommentMapper">
+        <!-- 根据图书ID获取图书评论列表 -->
+        <select id="getComments" resultType="com.anread.common.vo.BookCommentVO">
+            SELECT bc.*, u.username AS username, u.avatar AS avatar
+            FROM book_comment bc
+                     LEFT JOIN user u ON u.id = bc.user_id
+            WHERE bc.book_id = #{bookId}
+            AND (bc.is_public = 1 OR bc.user_id = #{userId})
+            ORDER BY bc.create_time DESC
+        </select>
+
+    <!-- 在 Mapper XML 文件中 -->
+    <resultMap id="BookCommentWithLikesResultMap" type="com.anread.common.vo.BookCommentVO">
+        <!-- 主表 book_comment 字段映射 -->
+        <id property="id" column="id"/>
+        <result property="bookId" column="book_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="avatar" column="avatar"/>
+        <result property="comment" column="comment"/>
+        <result property="score" column="score"/>
+        <result property="recommendation" column="recommendation"/>
+        <result property="isPublic" column="is_public"/>
+        <result property="likes" column="likes"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+
+        <!-- 嵌套查询：映射 commentLikes 列表 -->
+        <collection property="commentLikes" ofType="com.anread.common.vo.CommentLikeVO">
+            <id property="id" column="cl_id"/>
+            <result property="userId" column="cl_user_id"/>
+            <result property="username" column="cl_username"/>
+            <result property="avatar" column="cl_avatar"/>
+        </collection>
+        <collection property="subComments" ofType="com.anread.common.vo.SubCommentVO">
+            <id property="id" column="sc_id"/>
+            <result property="userId" column="sc_user_id"/>
+            <result property="content" column="sc_content"/>
+            <result property="likes" column="sc_likes"/>
+            <result property="createTime" column="sc_create_time"/>
+            <result property="updateTime" column="sc_update_time"/>
+            <result property="username" column="sc_username"/>
+            <result property="avatar" column="sc_avatar"/>
+        </collection>
+    </resultMap>
+    <select id="getComment" resultMap="BookCommentWithLikesResultMap">
+        SELECT bc.id,
+               bc.book_id,
+               bc.user_id,
+               bc.comment,
+               bc.score,
+               bc.recommendation,
+               bc.is_public,
+               bc.likes,
+               bc.create_time,
+               bc.update_time,
+
+               u.username,
+               u.avatar,
+
+               cl.id           AS cl_id,
+               cl.like_user_id AS cl_user_id,
+               clu.username    AS cl_username,
+               clu.avatar      AS cl_avatar,
+
+               sc.id           AS sc_id,
+               sc.user_id      AS sc_user_id,
+               sc.content      AS sc_content,
+               sc.likes        AS sc_likes,
+               sc.create_time  AS sc_create_time,
+               scu.username    AS sc_username,
+               scu.avatar      AS sc_avatar
+        FROM book_comment bc
+                 LEFT JOIN user u ON u.id = bc.user_id
+                 LEFT JOIN comment_like cl ON cl.comment_id = bc.id
+                 LEFT JOIN user clu ON clu.id = cl.like_user_id
+                 LEFT JOIN sub_comment sc ON sc.comment_id = bc.id AND sc.relate_table = 'book_comment'
+                 LEFT JOIN user scu ON scu.id = sc.user_id
+        WHERE bc.id = #{id}
+    </select>
+</mapper>

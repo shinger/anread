@@ -1,0 +1,26 @@
+{
+  "serverUrl": "http://localhost:8002",
+  "isStrict": false,
+  "allInOne": true,
+  "outPath": "E:/projects/Anread/anread-server/api-doc/filesystem-doc",
+  "coverOld": true,
+  "style":"xt256",
+  "createDebugPage": true,
+  "md5EncryptedHtmlName": false,
+  "projectName": "安阅书屋文件服务接口文档",
+  "openUrl": "http://localhost:7700/api",
+  "appToken": "27f15c5ff3894f2d96b750336b689145",
+  "debugEnvName":"本地环境",
+  "debugEnvUrl": "http://localhost:8000/file-api",
+  "tornaDebug": true,
+  "replace": true,
+  "requestHeaders": [
+    {
+      "name": "Admin-Test",
+      "type": "string",
+      "desc": "desc",
+      "value": "qtXOU5lR3Sygx1xd",
+      "required": false
+    }
+  ]
+}

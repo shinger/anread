@@ -1,0 +1,110 @@
+/* @import "./base.css"; */
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+* {
+  user-select: none;
+}
+
+li {
+  list-style: none;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  color: #bd763c !important;
+}
+
+textarea {
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+  background-color: transparent;
+  font-size: inherit;
+  resize: none;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+/* #app {
+  max-width: 1365px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  font-weight: normal;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  color: var(--color-text);
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+h3 {
+  font-weight: bold;
+}
+
+ul,
+button,
+input {
+  background-color: var(--color-background-light);
+  border: 0;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+}
+
+button {
+  border: 1px solid var(--color-border);
+}
+
+.pure-background {
+  background-color: var(--anread-pure);
+}
+
+.light-background {
+  background-color: var(--anread-light);
+}
+
+@media (hover: hover) {
+  a:hover {
+    color: #be5d0e !important;
+  }
+}
+
+@media (min-width: 1024px) {
+}
+
+.anyue-button {
+  background-color: #e37924;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.anyue-button:hover {
+  background-color: #d76b15;
+}
+
+.middle-inline {
+  display: inline-block;
+  vertical-align: middle;
+} */

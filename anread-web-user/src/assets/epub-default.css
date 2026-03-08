@@ -1,0 +1,12 @@
+p {
+    font-size: 18px;
+    margin-inline: 18px;
+}
+
+.block_9 {
+    line-height: 1.8;
+}
+
+body {
+    column-gap: 16px;
+}

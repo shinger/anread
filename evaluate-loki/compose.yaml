@@ -1,0 +1,359 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0.43
+    container_name: anread-mysql
+    restart: no
+    environment:
+      MYSQL_ROOT_PASSWORD: root   # read from .env file
+      MYSQL_DATABASE: anread-mysql                # auto create database
+    volumes:
+      - anyueread_mysql-data:/var/lib/mysql                # mysql volume
+      - ./mysql-config/conf.d:/etc/mysql/conf.d         # mysql config
+      # - ./mysql/init-scripts:/docker-entrypoint-initdb.d  # init scripts
+    ports:
+      - "3306:3306"
+    networks:
+      - anread-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Minio Object Storage
+  minio:
+    image: minio/minio:latest
+    container_name: anread-minio
+    restart: no
+    networks:
+      - anread-network
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - anread_minio-data:/data
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+      - MINIO_BROWSER_REDIRECT_URL=http://localhost:9001
+    command: server /data --address ':9000' --console-address ':9001'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # anread-web-user
+  web-user:
+    build:
+      context: ./anread-web-user                    
+      dockerfile: Dockerfile
+    image: anread-web-user:latest
+    container_name: anread-web-user
+    restart: no
+    environment:
+      NODE_ENV: development
+      PORT: 5173
+    ports:
+      - "5173:5173"
+    networks:
+      - anread-network
+    develop:
+      watch:
+        - action: sync
+          path: ./anread-web-user
+          target: usr/local/anread/anread-web-user
+          ignore:
+            - node_modules
+        - action: rebuild
+          path: ./anread-web-user/vite.config.js ./anread-web-user/package.json
+
+  # anread-web-admin
+  web-admin:
+    build:
+      context: ./anread-web-admin                    
+      dockerfile: Dockerfile
+    image: anread-web-admin:latest
+    container_name: anread-web-admin
+    restart: no
+    environment:
+      NODE_ENV: development
+      PORT: 5174
+    ports:
+      - "5174:5174"
+    networks:
+      - anread-network
+    develop:
+      watch:
+        - action: sync
+          path: ./anread-web-admin
+          target: usr/local/anread/anread-web-admin
+          ignore:
+            - node_modules
+        - action: rebuild
+          path: ./anread-web-admin/vite.config.js ./anread-web-admin/package.json
+          
+  # Nacos
+  nacos:
+    image: nacos/nacos-server:latest
+    container_name: anread-nacos
+    networks:
+      - anread-network
+    ports:
+      - "8080:8080"
+      - "8848:8848"
+      - "9848:9848"
+    environment:
+      MODE: standalone
+      NACOS_SERVER_PORT: 8848
+      NACOS_SERVER_ADDR: 0.0.0.0
+      NACOS_SERVER_USERNAME: nacos
+      NACOS_SERVER_PASSWORD: nacos
+      PREFER_HOST_MODE: hostname
+      NACOS_AUTH_IDENTITY_KEY: serverIdentity
+      NACOS_AUTH_IDENTITY_VALUE: security
+      NACOS_AUTH_TOKEN: VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+    volumes:
+      - anread_nacos-data:/home/nacos/data
+
+  # Torna API
+  torna:
+    container_name: anread-api-torna
+    image: torna:latest
+    restart: no
+    ports:
+      - "7700:7700"
+    volumes:
+      - ./torna-config/application.properties:/torna/config/application.properties
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    networks:
+      - anread-network
+
+  # MogoDB
+  mongodb:
+    image: mongo:latest
+    container_name: anread-mongodb
+    restart: no
+    networks:
+      - anread-network
+    ports:
+      - "27017:27017"
+    volumes:
+      - anread_mongodb-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+
+  # Redis
+  redis:
+    image: redis:8.2.2
+    container_name: anread-redis
+    restart: no
+    networks:
+      - anread-network
+    ports:
+      - "6379:6379"
+    volumes:
+      - anread_redis-data:/data
+
+  # Loki logging-stack
+  read:
+    image: grafana/loki:latest
+    command: "-config.file=/etc/loki/config.yaml -target=read"
+    ports:
+      - 3101:3100
+      - 7946
+      - 9095
+    volumes:
+      - ./loki-config/config.yaml:/etc/loki/config.yaml
+    depends_on:
+      - minio
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: &loki-dns
+      anread-network:
+        aliases:
+          - anread-network
+
+  write:
+    image: grafana/loki:latest
+    command: "-config.file=/etc/loki/config.yaml -target=write"
+    ports:
+      - 3102:3100
+      - 7946
+      - 9095
+    volumes:
+      - ./loki-config/config.yaml:/etc/loki/config.yaml
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      - minio
+    networks:
+      <<: *loki-dns
+
+  alloy:
+    image: grafana/alloy:latest
+    volumes:
+      - ./loki-config/alloy-local-config.yaml:/etc/alloy/config.alloy:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:  run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+    ports:
+      - 12345:12345
+    depends_on:
+      - gateway
+    networks:
+      - anread-network
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - gateway
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://gateway:3100
+            jsonData:
+              httpHeaderName1: "X-Scope-OrgID"
+            secureJsonData:
+              httpHeaderValue1: "tenant1"
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - anread-network
+
+  backend:
+    image: grafana/loki:latest
+    volumes:
+      - ./loki-config/config.yaml:/etc/loki/config.yaml
+    ports:
+      - "3100"
+      - "7946"
+    command: "-config.file=/etc/loki/config.yaml -target=backend -legacy-read-mode=false"
+    depends_on:
+      - gateway
+    networks:
+      - anread-network
+
+  gateway:
+    image: nginx:latest
+    depends_on:
+      - read
+      - write
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        cat <<EOF > /etc/nginx/nginx.conf
+        user  nginx;
+        worker_processes  5;  ## Default: 1
+
+        events {
+          worker_connections   1000;
+        }
+
+        http {
+          resolver 127.0.0.11;
+
+          server {
+            listen             3100;
+
+            location = / {
+              return 200 'OK';
+              auth_basic off;
+            }
+
+            location = /api/prom/push {
+              proxy_pass       http://write:3100\$$request_uri;
+            }
+
+            location = /api/prom/tail {
+              proxy_pass       http://read:3100\$$request_uri;
+              proxy_set_header Upgrade \$$http_upgrade;
+              proxy_set_header Connection "upgrade";
+            }
+
+            location ~ /api/prom/.* {
+              proxy_pass       http://read:3100\$$request_uri;
+            }
+
+            location = /loki/api/v1/push {
+              proxy_pass       http://write:3100\$$request_uri;
+            }
+
+            location = /loki/api/v1/tail {
+              proxy_pass       http://read:3100\$$request_uri;
+              proxy_set_header Upgrade \$$http_upgrade;
+              proxy_set_header Connection "upgrade";
+            }
+
+            location ~ /loki/api/.* {
+              proxy_pass       http://read:3100\$$request_uri;
+            }
+          }
+        }
+        EOF
+        /docker-entrypoint.sh nginx -g "daemon off;"
+    ports:
+      - "3100:3100"
+    healthcheck:
+      test: ["CMD", "service", "nginx", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - anread-network
+
+  flog:
+    image: mingrammer/flog
+    command: -f json -d 200ms -l
+    networks:
+      - anread-network
+
+# network config
+networks:
+  anread-network:
+    driver: bridge
+
+# volume config
+volumes:
+  anyueread_mysql-data:
+    external: true
+  anread_mysql-data:
+    external: true
+  anread_minio-data:
+    external: true
+  anread_nacos-data:
+    external: true
+  anread_mongodb-data:
+    external: true
+  anread_redis-data:
+    external: true

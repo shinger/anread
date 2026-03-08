@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "LXGW";
+  src: url("http://127.0.0.1:9000/general/LXGWWenKai-Regular.ttf");
+}
+
+body {
+  font-family: "LXGW";
+}

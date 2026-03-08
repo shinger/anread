@@ -1,0 +1,26 @@
+{
+  "serverUrl": "http://localhost:8004",
+  "isStrict": false,
+  "allInOne": true,
+  "outPath": "E:/projects/Anread/anread-server/api-doc/book-doc",
+  "coverOld": true,
+  "style":"xt256",
+  "createDebugPage": true,
+  "md5EncryptedHtmlName": false,
+  "projectName": "安阅书屋书本服务接口文档",
+  "openUrl": "http://localhost:7700/api",
+  "appToken": "3451f73dbcc2403ca43bec79d1c201d1",
+  "debugEnvName":"本地环境",
+  "debugEnvUrl": "http://localhost:8000/book-api",
+  "tornaDebug": true,
+  "replace": true,
+  "requestHeaders": [
+    {
+      "name": "Admin-Test",
+      "type": "string",
+      "desc": "desc",
+      "value": "qtXOU5lR3Sygx1xd",
+      "required": false
+    }
+  ]
+}

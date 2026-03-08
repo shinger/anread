@@ -1,0 +1,19 @@
+server:
+  address: 127.0.0.1
+  port: 8000
+
+spring:
+  application:
+    name: anread-server-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+  config:
+    import:
+      - optional:nacos:anread-server-gateway.yml?group=DEFAULT_GROUP
+      - optional:nacos:global-config.yml?group=DEFAULT_GROUP
+
+

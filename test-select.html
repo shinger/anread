@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        position: relative;
+        width: 400px;
+        height: 150px;
+      }
+
+      .elementB {
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        background: #f5f5f5;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .elementA {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent; /* 透明蒙版 */
+        cursor: text; /* 保持文本光标样式 */
+        user-select: none; /* 阻止A自身被选中 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="elementB">
+        这是一段可以被“自定义选中”的文本，即使被蒙版A覆盖。
+      </div>
+      <div class="elementA"></div>
+      <!-- 蒙版 -->
+    </div>
+
+    <script>
+      const elementA = document.querySelector(".elementA");
+      const elementB = document.querySelector(".elementB");
+      let isSelecting = false;
+      let selectionStart = null; // 选中起始位置 { node, offset }
+      let selectionEnd = null; // 选中结束位置 { node, offset }
+
+      // 1. 鼠标按下：开始选中
+      elementA.addEventListener("mousedown", (e) => {
+        e.preventDefault(); // 阻止默认文本选中
+        isSelecting = true;
+
+        // 获取鼠标按下位置对应的文本节点和偏移量
+        const pos = getCaretPosition(e.clientX, e.clientY);
+        if (pos) {
+          selectionStart = pos;
+          selectionEnd = pos;
+          updateCustomSelection(); // 初始化选中效果
+        }
+      });
+
+      // 2. 鼠标移动：更新选中范围
+      elementA.addEventListener("mousemove", (e) => {
+        if (!isSelecting) return;
+
+        const pos = getCaretPosition(e.clientX, e.clientY);
+        if (pos) {
+          selectionEnd = pos;
+          updateCustomSelection(); // 实时更新选中效果
+        }
+      });
+
+      // 3. 鼠标抬起：结束选中
+      elementA.addEventListener("mouseup", () => {
+        isSelecting = false;
+        // 可在这里获取最终选中的文本：getSelectedText()
+      });
+
+      // 辅助函数：根据坐标获取文本节点和偏移量
+      function getCaretPosition(clientX, clientY) {
+        // 从元素B的坐标系计算位置（因为A覆盖在B上，坐标一致）
+        const rect = elementB.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        // 获取该坐标对应的文本位置
+        const caret = document.caretPositionFromPoint(
+          rect.left + x,
+          rect.top + y
+        );
+        if (!caret || caret.offsetNode.parentElement !== elementB) {
+          return null; // 确保在元素B内
+        }
+        return { node: caret.offsetNode, offset: caret.offset };
+      }
+
+      // 辅助函数：更新自定义选中效果
+      function updateCustomSelection() {
+        // 清除之前的选中样式
+        clearCustomSelection();
+
+        if (!selectionStart || !selectionEnd) return;
+
+        // 创建 Range 对象表示选中范围
+        const range = document.createRange();
+        range.setStart(selectionStart.node, selectionStart.offset);
+        range.setEnd(selectionEnd.node, selectionEnd.offset);
+
+        // 模拟选中样式：用 span 包裹选中的文本
+        const selectedText = range.cloneContents();
+        const highlight = document.createElement("span");
+        highlight.className = "custom-selection";
+        highlight.appendChild(selectedText);
+
+        // 替换选中的文本为带高亮的 span
+        range.deleteContents();
+        range.insertNode(highlight);
+      }
+
+      // 辅助函数：清除自定义选中样式
+      function clearCustomSelection() {
+        const highlights = elementB.querySelectorAll(".custom-selection");
+        highlights.forEach((hl) => {
+          // 将 span 内的文本放回原位，移除 span
+          const parent = hl.parentNode;
+          while (hl.firstChild) {
+            parent.insertBefore(hl.firstChild, hl);
+          }
+          parent.removeChild(hl);
+        });
+      }
+
+      // 辅助函数：获取当前选中的文本内容
+      function getSelectedText() {
+        const highlight = elementB.querySelector(".custom-selection");
+        return highlight ? highlight.textContent : "";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<template>
+  <i class="icon-font flex items-center justify-center">
+    <svg
+      :width="size"
+      :height="size"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      x="0px"
+      y="0px"
+      viewBox="0 0 512 512"
+      enable-background="new 0 0 512 512"
+      xml:space="preserve"
+    >
+      <path
+        :fill="themeStore.themeLight ? '#000' : '#fff'"
+        d="M96.4,416h77.1l50.9-96.6V96h-160v223.4h77.1L96.4,416z M320.4,416h77.1l50-96.6V96H288.4v223.4h82L320.4,416z"
+      ></path>
+    </svg>
+  </i>
+</template>
+
+<script setup>
+import { computed } from "vue";
+import { useThemeStore } from "@/stores/theme-store.js";
+
+const themeStore = useThemeStore();
+
+const props = defineProps({
+  size: {
+    type: Number,
+    default: 24,
+  },
+  theme: {
+    type: String,
+    default: "light",
+  },
+});
+
+const size = computed(() => props.size);
+</script>
+
+<style></style>
