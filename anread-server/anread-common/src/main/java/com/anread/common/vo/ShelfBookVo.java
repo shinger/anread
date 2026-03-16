@@ -1,5 +1,6 @@
 package com.anread.common.vo;
 
+import com.anread.common.annotation.IpReplace;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +39,7 @@ public class ShelfBookVo {
     /**
      * 封面
      */
+    @IpReplace
     private String cover;
      /**
      * 是否读完

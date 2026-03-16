@@ -123,6 +123,143 @@
         </ul>
       </div>
     </div>
+    <!-- 底部菜单栏弹窗 -->
+    <div
+      id="setting-wrapper"
+      v-show="openSetting"
+      class="z-50 fixed bottom-8 left-0 right-0 flex justify-between items-center p-2 bg-white dark:bg-black overflow-y-scroll sm:hidden"
+    >
+      <!-- 目录 -->
+      <div v-show="openSetting == 1" class="h-155 w-full">
+        <a
+          class="flex cursor-pointer"
+          v-if="bookInformation"
+          :href="`/introduction/${route.params.id}`"
+        >
+          <img
+            class="w-15 h-22 object-cover mr-3"
+            :src="bookInformation.cover"
+          />
+          <div class="flex flex-col justify-between items-center">
+            <p class="text-lg font-bold">{{ bookInformation.title }}</p>
+            <p class="text-base">{{ bookInformation.author }}</p>
+          </div>
+        </a>
+
+        <nav class="flex flex-col items-start">
+          <ul
+            class="border-t border-gray-300 text-base/12 w-full truncate"
+            v-for="item in tocList"
+            :key="item.id"
+          >
+            <li :class="{ highLight: item.highLight == true }">
+              <a
+                @click="
+                  displayToHref(item.href);
+                  emits('closeBottomMenu');
+                "
+                >{{ item.label }}</a
+              >
+            </li>
+            <li
+              class="pl-3 border-t border-gray-300 text-sm/10 h-10 w-full truncate"
+              :class="{ highLight: subItem.highLight == true }"
+              v-for="subItem in item.subitems"
+              :key="subItem.id"
+            >
+              <a
+                @click="
+                  displayToHref(subItem.href);
+                  emits('closeBottomMenu');
+                "
+                >{{ subItem.label }}</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- 字体 -->
+      <div
+        class="flex flex-col cursor-pointer w-full h-60"
+        v-show="openSetting == 2"
+      >
+        <span>字号大小</span>
+        <div
+          class="self-center flex justify-between bg-gray-100 rounded-2xl w-full h-8 cursor-pointer"
+        >
+          <div class="z-5 mx-2 text-sm text-gray-400 leading-8 select-none">
+            A
+          </div>
+          <div class="z-5 mx-2 text-sm text-gray-400 leading-8 select-none">
+            A
+          </div>
+        </div>
+        <div class="absolute -top-8 h-8 w-8 z-20 cursor-pointer"></div>
+        <div class="z-2 relative left-0 w-full h-8 rounded-2xl">
+          <div
+            class="absolute -top-8 h-8 w-8 z-20 cursor-pointer"
+            v-for="i in 6"
+            :key="i"
+            :style="`margin-left:${(i - 1) * 50}px;`"
+            @click="changeFontSize(i)"
+          ></div>
+          <div
+            class="absolute -top-8 h-8 rounded-2xl bg-gray-300 flex justify-end items-end p-1 cursor-pointer"
+            v-for="i in 6"
+            :key="i"
+            :style="`width:${(i - 1) * 50 + 32}px;`"
+            v-show="i == showDot"
+          >
+            <div class="bg-white rounded-full w-6 h-6"></div>
+          </div>
+          <ul class="flex flex-col justify-start my-4">
+            <li
+              class="m-1"
+              v-for="font in fonts"
+              :key="font.id"
+              @click="changeFont(font.fontValue)"
+            >
+              <a>{{ font.fontName }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 笔记 -->
+      <div v-show="openSetting == 3" v-if="tocList.length" class="w-full h-155">
+        <ul class="flex flex-col">
+          <li
+            class="w-full flex flex-col p-2 mb-1"
+            v-for="(annotation, index) in annotations"
+            :key="index"
+          >
+            <p>
+              {{
+                getTocTitle(annotation.tocParentIndex, annotation.tocChildIndex)
+              }}
+            </p>
+            <a
+              @click="displayToHref(item.epubCfiRange)"
+              class="w-full border border-gray-300 rounded-md flex flex-col justify-between p-2 my-2 text-sm"
+              v-for="item in annotation.userAnnotationList"
+              :key="item.id"
+            >
+              <div
+                :title="item.lineContent"
+                class="overflow-hidden text-ellipsis w-full max-h-40"
+              >
+                {{ item.lineContent }}
+              </div>
+              <div
+                v-if="item.type == 'idea'"
+                class="border-l-2 border-gray-300 pl-2 mt-2 text-sm text-gray-500"
+              >
+                {{ item.ideaContent }}
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <!-- 已读完页面 -->
     <div
       class="absolute top-0 z-4 w-full h-full rounded-2xl bg-white dark:bg-black flex flex-col items-center justify-center text-xl"
@@ -161,7 +298,7 @@
     <!-- 想法编辑弹窗 -->
     <div
       v-show="showIdeaEditor"
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 w-160 border border-gray-300 dark:border-gray-600 bg-white dark:bg-black rounded-2xl p-4 z-10"
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 w-7/8 md:w-160 border border-gray-300 dark:border-gray-600 bg-white dark:bg-black rounded-2xl p-4 z-10"
     >
       <div class="flex justify-end">
         <button
@@ -203,7 +340,7 @@
     <!-- 划线详情 -->
     <div
       v-if="showHilightDetail"
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 w-160 border border-gray-300 dark:border-gray-600 bg-white dark:bg-black rounded-2xl p-4 z-10"
+      class="absolute top-1/4 sm:top-1/2 left-1/2 -translate-x-1/2 w-full md:w-160 border border-gray-300 dark:border-gray-600 bg-white dark:bg-black rounded-2xl p-4 z-10"
     >
       <div class="flex justify-start items-center">
         <button
@@ -236,12 +373,13 @@
         <div
           class="flex items-center justify-start ml-4 border-t-2 border-gray-300 h-12 w-64"
         >
-          <span class="text-md text-[#6e6d6d] dark:text-[#eaeaea] mr-4"
+          <span
+            class="text-sm md:text-md text-[#6e6d6d] dark:text-[#eaeaea] mr-1 md:mr-4"
             >划线颜色</span
           >
           <li
             @click="changeHighlightColor('yellow', highlightDetail)"
-            class="w-6 h-6 mx-1 rounded-full bg-yellow-300"
+            class="w-4 h-4 md:w-6 md:h-6 mx-1 rounded-full bg-yellow-300"
             :class="{
               'border-2 border-[#4a4949] dark:border-[#eaeaea]':
                 selectedHighlight == 'yellow',
@@ -249,7 +387,7 @@
           ></li>
           <li
             @click="changeHighlightColor('green', highlightDetail)"
-            class="w-6 h-6 mx-1 rounded-full bg-[#84c984]"
+            class="w-4 h-4 md:w-6 md:h-6 mx-1 rounded-full bg-[#84c984]"
             :class="{
               'border-2 border-[#4a4949] dark:border-[#eaeaea]':
                 selectedHighlight == 'green',
@@ -257,7 +395,7 @@
           ></li>
           <li
             @click="changeHighlightColor('red', highlightDetail)"
-            class="w-6 h-6 mx-1 rounded-full bg-red-500"
+            class="w-4 h-4 md:w-6 md:h-6 mx-1 rounded-full bg-red-500"
             :class="{
               'border-2 border-[#4a4949] dark:border-[#eaeaea]':
                 selectedHighlight == 'red',
@@ -265,7 +403,7 @@
           ></li>
           <li
             @click="changeHighlightColor('skyblue', highlightDetail)"
-            class="w-6 h-6 mx-1 rounded-full bg-[#58c4f3]"
+            class="w-4 h-4 md:w-6 md:h-6 mx-1 rounded-full bg-[#58c4f3]"
             :class="{
               'border-2 border-[#4a4949] dark:border-[#eaeaea]':
                 selectedHighlight == 'skyblue',
@@ -273,29 +411,26 @@
           ></li>
           <li
             @click="changeHighlightColor('purple', highlightDetail)"
-            class="w-6 h-6 mx-1 rounded-full bg-purple-500"
+            class="w-4 h-4 md:w-6 md:h-6 mx-1 rounded-full bg-purple-500"
             :class="{ 'border-2 border-[#4a4949]': highlightColor == 'purple' }"
           ></li>
         </div>
         <div class="flex justify-end">
           <button
             @click="removeHighlight(highlightDetail)"
-            class="mx-2 w-12 h-8 flex items-center justify-center border rounded-lg bg-white dark:bg-black border-gray-300 dark:border-gray-600 cursor-pointer"
+            class="mx-2 w-8 md:w-12 h-6 md:h-8 text-sm flex items-center justify-center border rounded-lg bg-white dark:bg-black border-gray-300 dark:border-gray-600 cursor-pointer"
           >
             删除
           </button>
           <button
             @click="copyHighlight(highlightDetail.lineContent)"
-            class="mx-2 w-12 h-8 flex items-center justify-center border rounded-lg bg-white dark:bg-black border-gray-300 dark:border-gray-600 cursor-pointer"
+            class="mx-2 w-8 md:w-12 h-6 md:h-8 text-sm flex items-center justify-center border rounded-lg bg-white dark:bg-black border-gray-300 dark:border-gray-600 cursor-pointer"
           >
             复制
           </button>
         </div>
       </div>
     </div>
-    <div
-      class="fixed top-0 left-0 right-0 bottom-0 opacity-0 pointer-events-none"
-    ></div>
   </div>
 </template>
 
@@ -322,7 +457,15 @@ import {
 import { getFonts } from "@/api/book-api.js";
 import { getReadingRecord } from "@/api/book-api.js";
 import { ReadingStatus } from "@/utils/enums.js";
-const emits = defineEmits(["popup", "hidePop", "openIdea"]);
+import { isMobile } from "@/utils/device.js";
+
+const emits = defineEmits([
+  "popup",
+  "hidePop",
+  "openIdea",
+  "openBottomMenu",
+  "closeBottomMenu",
+]);
 
 const props = defineProps({
   openSetting: {
@@ -365,8 +508,14 @@ const highlightColor = ref("yellow");
 const selectedHighlight = ref("yellow");
 const initStore = useInitStore();
 const publicIdeaPos = ref([]);
+const isMobileDevice = ref(false);
+const touchPos = ref({
+  x: 0,
+  y: 0,
+});
 
 onMounted(() => {
+  isMobileDevice.value = isMobile();
   refreshAnnotations();
   getPublicIdeaPos(route.params.id).then((result) => {
     publicIdeaPos.value = result;
@@ -775,20 +924,79 @@ const renderEpub = (url) => {
 
   // 文字选中后显示弹窗
   rendition.value.hooks.content.register((contents) => {
+    contents.window.document.addEventListener("contextmenu", (e) =>
+      e.preventDefault()
+    );
+    contents.window.addEventListener("touchstart", (e) => {
+      if (!isMobileDevice.value) {
+        return;
+      }
+      emits("openBottomMenu");
+
+      const touch = e.changedTouches[0];
+      console.log("touch start: ", touch.clientX, touch.clientY);
+      touchPos.value.x = touch.clientX;
+      touchPos.value.y = touch.clientY;
+    });
+    contents.window.document.addEventListener("selectionchange", (e) => {
+      if (!isMobileDevice.value) {
+        return;
+      }
+      console.log("selection change: ", touchPos.value.x, touchPos.value.y);
+      const framePos = contents.window.frameElement.getBoundingClientRect();
+      setTimeout(() => {
+        const selection = contents.window.getSelection();
+        const selectedText = selection.toString().trim();
+        if (selection && selectedText.length > 0 && selection.rangeCount > 0) {
+          console.log("selection range: ", selection.getRangeAt(0));
+          currentSelectionText.value = selectedText;
+
+          emits("popup", {
+            x: touchPos.value.x + framePos.left,
+            y: touchPos.value.y + framePos.top + 10,
+          });
+          // popup.style.left = e.clientX + framePos.left + "px";
+          // popup.style.top = e.clientY + framePos.top + 10 + "px";
+          // popup.classList.add("show");
+          const range = selection.getRangeAt(0);
+          if (!range.collapsed) {
+            const cfirange = new EpubCFI(range, contents.cfiBase).toString();
+            currentCFIRange.value = cfirange;
+            console.log(cfirange);
+          }
+        } else {
+          emits("hidePop");
+        }
+      }, 10);
+    });
+    // contents.window.document.addEventListener("selectionchange", (e) => {
+    //   console.log(e.target);
+    //   console.log("selection change: ", touchPos.value.x, touchPos.value.y);
+    // });
     // 监听鼠标抬起事件
     contents.window.addEventListener("mouseup", (e) => {
+      if (isMobileDevice.value) {
+        return;
+      }
       const framePos = contents.window.frameElement.getBoundingClientRect();
-      // console.log("framePos: ", framePos);
-      // isPopupShow.value = true;
+      // console.log(contents.window.frameElement);
+      // console.log("clientX: ", e.clientX, "clientY: ", e.clientY);
+      // console.log(
+      //   "framePos.left: ",
+      //   framePos.left,
+      //   "framePos.top: ",
+      //   framePos.top
+      // );
       setTimeout(() => {
         // console.log("mouse up: ", e.clientX, e.clientY);
 
         const selection = contents.window.getSelection();
         const range = selection.getRangeAt(0);
-        console.log("selection range: ", range);
+        // console.log("selection range: ", range);
         const selectedText = selection.toString().trim();
         if (selection && selectedText.length > 0 && selection.rangeCount > 0) {
           currentSelectionText.value = selectedText;
+
           emits("popup", {
             x: e.clientX + framePos.left,
             y: e.clientY + framePos.top + 10,
@@ -948,6 +1156,10 @@ const handleIdeaEdit = (data) => {
   }
 };
 
+const closeHilightDetail = () => {
+  showHilightDetail.value = false;
+};
+
 defineExpose({
   renderEpub,
   destroyEpub,
@@ -959,6 +1171,7 @@ defineExpose({
   handleIdeaEdit,
   handleHighlightIdea,
   handleIdeaEdit,
+  closeHilightDetail,
 });
 </script>
 

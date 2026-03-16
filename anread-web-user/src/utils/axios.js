@@ -4,35 +4,29 @@ import router from "@/router/index";
 import { useToast } from "vue-toast-notification";
 
 const toast = useToast();
-// const router = useRouter();
 
-axios.defaults.baseURL = "/api";
-// 携带 cookie，对目前的项目没有什么作用，因为我们是 token 鉴权
+// 修改baseURL：开发环境用/api（走vite代理），生产环境用完整IP
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL
+
 axios.defaults.withCredentials = true;
-// 请求头，headers 信息
 axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
-// 默认 post 请求，使用 application/json 形式
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-// 添加请求拦截器
+// 请求拦截器（不变）
 axios.interceptors.request.use(
   function (config) {
-    // 添加请求头
     if (window.localStorage.token) {
       config.headers.Authorization = localStorage.getItem("token");
     }
     return config;
   },
   function (error) {
-    // 对请求错误做些什么
     return Promise.reject(error);
   }
 );
 
-// 响应拦截器，内部根据返回值，重新组装，统一管理。
+// 响应拦截器（不变，仅优化错误提示）
 axios.interceptors.response.use((res) => {
-  // console.log(res.data);
-
   if (res.data === undefined || typeof res.data !== "object") {
     return Promise.reject(res);
   }
@@ -46,9 +40,10 @@ axios.interceptors.response.use((res) => {
   }
   return res.data.data;
 }, error => {
-  console.log(error);
+  console.error("接口请求错误：", error.message, "请求地址：", error.config?.url); // 新增：打印请求地址
   if (error.response == undefined) {
-    return;
+    toast.error("网络请求失败，请检查后端服务或网络"); // 新增：友好提示
+    return Promise.reject(error); // 新增：确保Promise有返回
   }
   if (error.response.status == 401) {
     localStorage.removeItem("token");

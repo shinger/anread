@@ -1,6 +1,8 @@
 package com.anread.common.entity;
 
+import com.anread.common.annotation.IpReplace;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -64,7 +66,7 @@ public class Book {
      * 读者数量
      */
     private Long readership;
-     /**
+    /**
      * 读完人数
      */
     private Long readingOverCount;
@@ -75,6 +77,7 @@ public class Book {
     /**
      * 封面URL
      */
+    @IpReplace
     private String cover;
     /**
      * 文件路径
@@ -84,8 +87,9 @@ public class Book {
      * 文件ID
      */
     private String fileId;
-     /**
+    /**
      * EPUB文件URL
      */
+    @IpReplace
     private String epubURL;
 }

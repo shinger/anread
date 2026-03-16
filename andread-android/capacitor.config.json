@@ -1,0 +1,13 @@
+{
+  "appId": "com.anread.app",
+  "appName": "anread-android",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true
+    }
+  },
+  "server": {
+    "androidScheme": "http"
+  }
+}

@@ -35,7 +35,3 @@ if (localStorage.getItem("highlightColor")) {
 } else {
   initStore.setHighlightColor("yellow");
 }
-
-// src/test-marks.js
-import { Highlight } from 'marks-pane'; // 从 node_modules 引入
-console.log('npm version:', Highlight);

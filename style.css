@@ -1,0 +1,155 @@
+/* 基础重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
+}
+
+body {
+  background-color: #f9f9f9; /* 宣纸微黄底色 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  color: #1a1a1a;
+}
+
+/* 背景装饰文字 */
+.bg-text {
+  position: absolute;
+  right: -5%;
+  bottom: 5%;
+  font-size: 8rem;
+  color: rgba(0, 0, 0, 0.03);
+  font-family: "KaiTi", serif;
+  writing-mode: vertical-rl;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 卡片主体 */
+.auth-card {
+  background: #ffffff;
+  width: 400px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eeeeee;
+  position: relative;
+  z-index: 1;
+}
+
+/* 切换按钮 */
+.toggle-group {
+  display: flex;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #eee;
+}
+
+.toggle-group button {
+  background: none;
+  border: none;
+  padding-bottom: 10px;
+  margin-right: 30px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #999;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.toggle-group button.active {
+  color: #000;
+  font-weight: 600;
+}
+
+.toggle-group button.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #000;
+}
+
+/* 表单逻辑 */
+.auth-form {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+.auth-form.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 输入框样式 */
+.input-group {
+  margin-bottom: 25px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #000;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  width: 100%;
+  padding: 15px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.3s;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+.form-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.form-footer a {
+  font-size: 0.85rem;
+  color: #999;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  color: #000;
+}

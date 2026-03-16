@@ -3,7 +3,6 @@ package com.anread.book.service.impl;
 import com.anread.book.mapper.SysConfigMapper;
 import com.anread.book.mapper.UserShelfMapper;
 import com.anread.book.repositry.BookRepository;
-import com.anread.book.utils.DeviceUtils;
 import com.anread.common.dto.Result;
 import com.anread.common.entity.Book;
 import com.anread.common.entity.Category;
@@ -80,16 +79,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Mono<Result<Book>> getBookByBookId(String userId, String bookId) {
-        boolean isMobile;
-        String accessIP;
-        if (DeviceUtils.isMobileDevice()) {
-            isMobile = true;
-            accessIP = sysConfigMapper.getAccessIP();
-        } else {
-            accessIP = null;
-            isMobile = false;
-        }
-
         return bookRepository.findById(bookId)
                 .doOnSuccess(book -> {
                     // 更新用户书架
@@ -99,10 +88,6 @@ public class BookServiceImpl implements BookService {
                             .set(UserShelf::getUpdateTimestamp, new Timestamp(System.currentTimeMillis())));
                 })
                 .map(book -> {
-                    if (isMobile && accessIP != null) {
-                        book.setCover(book.getCover().replace("127.0.0.1", accessIP));
-                        book.setEpubURL(book.getEpubURL().replace("127.0.0.1", accessIP));
-                    }
                     log.info("【根据书本ID查询书本】 书本ID: {}", bookId);
                     return Result.<Book>success().data(book);
                 })

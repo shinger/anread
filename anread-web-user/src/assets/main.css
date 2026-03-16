@@ -3,8 +3,21 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+:root {
+  --birch: #d4b896;
+  --cedar: #b8956a;
+  --mahogany: #8b5e3c;
+  --bark: #5c3d2e;
+  --ink: #2e1f14;
+  --parchment: #f5ead8;
+  --cream: #faf3e8;
+  --aged: #e8d9c0;
+  --shadow: rgba(44, 28, 16, 0.18);
+  --fog: rgba(245, 234, 216, 0.55);
+}
+
 * {
-  user-select: none;
+  /* user-select: none; */
 }
 
 li {

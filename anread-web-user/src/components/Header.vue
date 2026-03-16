@@ -1,12 +1,15 @@
 <template>
-  <header class="h-16 border-b border-gray-200 flex dark:text-white">
+  <header
+    v-if="showHeader || isPC()"
+    class="h-16 border-b border-gray-200 flex dark:text-white"
+  >
     <div class="w-1/4 h-full items-center justify-center sm:flex hidden">
       <a href="/">安阅书屋</a>
     </div>
     <div class="flex items-center justify-center ml-2">
       <Avatar
         class="w-1/8 h-full sm:hidden"
-        @click="avatarIsPop = !avatarIsPop"
+        @click="avatarIsPop = !avatarIsPop;router.push('/profile')"
         :src="avatarUrl"
       />
     </div>
@@ -35,7 +38,9 @@
       >
         <li class="h-8 mx-2 lg:mx-4"><RouterLink to="/">首页</RouterLink></li>
         <span class="w-full block h-px sm:h-4 sm:w-0.5 bg-gray-200"></span>
-        <li class="h-8 mx-2 lg:mx-4"><RouterLink to="/category">分类</RouterLink></li>
+        <li class="h-8 mx-2 lg:mx-4">
+          <RouterLink to="/category">分类</RouterLink>
+        </li>
         <span class="w-full block h-px sm:h-4 sm:w-0.5 bg-gray-200"></span>
         <li class="h-8 mx-2 lg:mx-4">
           <RouterLink to="/bookshelf">书架</RouterLink>
@@ -78,7 +83,11 @@ import { searchBooks } from "@/api/book-api.js";
 import { useUserStore } from "@/stores/user";
 import { useUtilStore } from "@/stores/util-store";
 import { useSearchStore } from "@/stores/search-store";
+import { useRoute, useRouter } from "vue-router";
+import { isPC } from "@/utils/device.js";
 
+const router = useRouter();
+const route = useRoute();
 const searchStore = useSearchStore();
 const utilStore = useUtilStore();
 const loginStore = useLoginStore();
@@ -86,7 +95,8 @@ const userStore = useUserStore();
 const avatarIsPop = ref(false);
 const avatarUrl = ref("");
 const phoneMenuUp = ref(false);
-const searchText = ref('');
+const searchText = ref("");
+const showHeader = ref(true);
 
 const logout = () => {
   localStorage.removeItem("token");
@@ -95,6 +105,8 @@ const logout = () => {
 };
 
 onBeforeMount(() => {
+  showHeader.value = !route.meta.hideHeader;
+
   loginStore.updateLogin();
   fetchUserInfo();
 });
@@ -106,7 +118,7 @@ const handleSearch = (event) => {
     console.log(result);
     searchStore.setSearchResult(result);
   });
-}
+};
 
 // 获取用户信息
 const fetchUserInfo = () => {
@@ -121,11 +133,38 @@ const fetchUserInfo = () => {
   });
 };
 
-// 监听登录状态变化
-watch(() => loginStore.isLogin, (newValue, oldValue) => {
-  if (!oldValue && newValue) {
-    fetchUserInfo();
+watch(
+  () => [
+    loginStore?.isLogin ?? false,
+    route.matched.find((item) => item.name === "book")?.meta?.hideHeader ??
+      false,
+  ],
+  (newVals, oldVals = []) => {
+    const [newLogin = false, newHideHeader = false] = newVals;
+    const [oldLogin = false, oldHideHeader = false] = oldVals;
+
+    if (!oldLogin && newLogin) {
+      fetchUserInfo();
+    }
+    if (oldHideHeader !== newHideHeader) {
+      console.log(newHideHeader ? "隐藏header" : "显示header");
+      showHeader.value = !newHideHeader;
+    }
+  },
+  {
+    immediate: true,
+    deep: true,
   }
+);
+
+const closePhoneMenu = () => {
+  if (phoneMenuUp.value) {
+    phoneMenuUp.value = false;
+  }
+}
+
+defineExpose({
+  closePhoneMenu,
 });
 </script>
 

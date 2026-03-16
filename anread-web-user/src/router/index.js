@@ -24,7 +24,7 @@ const router = createRouter({
       name: "book",
       component: () => import("@/views/BookViewV2.vue"),
       props: true,
-      meta: { requireAuth: false },
+      meta: { requireAuth: false, hideHeader: true },
     },
     {
       path: "/category",

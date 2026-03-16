@@ -1,5 +1,6 @@
 package com.anread.common.vo;
 
+import com.anread.common.annotation.IpReplace;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class UserVO {
     /**
      * 头像URL
      */
+    @IpReplace
     private String avatar;
     /**
      * 邮箱

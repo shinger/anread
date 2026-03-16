@@ -25,7 +25,9 @@ import IdeaIcon from "@/components/icons/IdeaIcon.vue";
 import Avatar from "@/components/Avatar.vue";
 import LikeIcon from "@/components/icons/LikeIcon.vue";
 import CommentIcon from "@/components/icons/CommentIcon.vue";
+import ArrowBackIcon from "@/components/icons/ArrowBackIcon.vue";
 import { getPublicIdeas } from "@/api/user-api.js";
+import { isMobile } from "@/utils/device.js";
 
 const router = useRouter();
 const route = useRoute();
@@ -46,6 +48,8 @@ const currentIdeas = ref([]);
 const showIdeaList = ref(false);
 const showMask = ref(false);
 const utilStore = useUtilStore();
+const showBottomMenu = ref(false);
+const isMobileDevice = ref(isMobile());
 
 const renderEpub = (url) => {
   nextTick(() => {
@@ -172,11 +176,20 @@ const cancelMask = () => {
   showMask.value = false;
   openSetting.value = 0;
   showIdeaList.value = false;
+  readAreaRef.value.closeHilightDetail();
 };
 
 const showPopup = (pos) => {
+  if (isMobileDevice.value) {
+    popupRef.value.classList.add("flex");
+    pos.y -= 60;
+    if (window.innerWidth < 768) {
+      pos.x = 0;
+    }
+  }
   popupRef.value.style.left = pos.x + "px";
   popupRef.value.style.top = pos.y + "px";
+
   popupRef.value.classList.remove("hidden");
 };
 
@@ -195,15 +208,49 @@ const copyLineContent = () => {
     utilStore.showMessage("已复制到剪贴板");
   });
 };
+
+const handleBottomMenuSetting = (i) => {
+  console.log(i);
+  if (openSetting.value == 0 && i > 0) {
+    openSetting.value = i;
+    return;
+  }
+  if (openSetting.value == i) {
+    openSetting.value = 0;
+    return;
+  }
+  openSetting.value = i;
+};
+
+const goBack = () => {
+  // 方式1：判断历史记录长度
+  if (window.history.length <= 1) {
+    // 无历史记录，跳转到指定页面（如首页）
+    router.push("/home");
+  } else {
+    // 有历史记录，正常返回
+    router.go(-1);
+  }
+};
 </script>
 
 <template>
-  <main class="w-full h-[calc(100vh-120px)] p-2 sm:flex sm:justify-center">
+  <main
+    class="w-full h-screen md:h-[calc(100vh-120px)] p-2 sm:flex sm:justify-center"
+  >
     <!-- 阅读区域 -->
     <div
       class="h-full sm:block sm:relative sm:w-4/5 sm:rounded-2xl sm:bg-white dark:bg-black sm:mt-4"
     >
       <ReadArea
+        @openBottomMenu="
+          showBottomMenu = !showBottomMenu;
+          openSetting = 0;
+        "
+        @closeBottomMenu="
+          showBottomMenu = false;
+          openSetting = 0;
+        "
         ref="readAreaRef"
         :openSetting="openSetting"
         :bookInformation="bookInformation"
@@ -275,7 +322,7 @@ const copyLineContent = () => {
     <!-- 操作弹窗 -->
     <div
       ref="popupRef"
-      class="absolute hidden bg-white dark:bg-black rounded-lg shadow-md p-0.5 z-100 min-w-[90px]"
+      class="absolute left-10 right-10 hidden bg-white dark:bg-black rounded-lg shadow-md p-0.5 z-100 min-w-22.5"
     >
       <div
         @click="readAreaRef.handleCopy()"
@@ -305,7 +352,7 @@ const copyLineContent = () => {
     <!-- 想法列表 -->
     <div
       v-show="showIdeaList"
-      class="absolute top-40 left-1/2 -translate-x-1/2 rounded-lg bg-[#f4f5f7] w-120 pb-2 z-15"
+      class="absolute top-40 left-1/2 -translate-x-1/2 rounded-lg bg-[#f4f5f7] w-7/8 md:w-120 pb-2 z-15"
     >
       <div class="flex flex-col justify-center px-4 pt-4">
         <div class="text-lg font-bold text-[#24292f] text-center">公开想法</div>
@@ -371,7 +418,75 @@ const copyLineContent = () => {
         </div>
       </div>
     </div>
+
+    <!-- 手机顶部菜单栏 -->
+    <div
+      v-show="showBottomMenu"
+      class="z-50 fixed top-0 left-0 right-0 flex justify-between items-center p-2 bg-white dark:bg-black border-b border-gray-600 sm:hidden"
+    >
+      <div class="flex items-center justify-start w-full mx-10">
+        <button
+          class="w-8 h-4 dark:border-gray-600 flex items-center justify-center"
+          @click="goBack"
+        >
+          <ArrowBackIcon
+            :size="20"
+            :theme="themeStore.themeLight ? 'light' : 'dark'"
+          />
+        </button>
+      </div>
+    </div>
+    <!-- 手机底部菜单栏 -->
+    <div
+      v-show="showBottomMenu"
+      class="z-50 fixed bottom-0 left-0 right-0 flex justify-between items-center p-2 bg-white dark:bg-black sm:hidden"
+    >
+      <div class="flex items-center justify-between w-full mx-10">
+        <button
+          class="w-8 h-8 dark:border-gray-600 flex items-center justify-center"
+          @click="handleBottomMenuSetting(1)"
+        >
+          <MenuIcon
+            :size="20"
+            :theme="themeStore.themeLight ? 'light' : 'dark'"
+          />
+        </button>
+        <button
+          class="w-8 h-8 dark:border-gray-600 flex items-center justify-center"
+          @click="handleBottomMenuSetting(2)"
+        >
+          <FontIcon
+            :size="20"
+            :theme="themeStore.themeLight ? 'light' : 'dark'"
+          />
+        </button>
+        <!-- 笔记 -->
+        <button
+          class="w-8 h-8 dark:border-gray-600 flex items-center justify-center"
+          @click="handleBottomMenuSetting(3)"
+        >
+          <a
+            ><PenIcon
+              :size="20"
+              :theme="themeStore.themeLight ? 'light' : 'dark'"
+          /></a>
+        </button>
+        <!-- 主题 -->
+        <button
+          class="w-8 h-8 dark:border-gray-600 flex items-center justify-center"
+          @click="onSetting(4)"
+        >
+          <a>
+            <ThemeIcon
+              :size="20"
+              :theme="themeStore.themeLight ? 'light' : 'dark'"
+            />
+          </a>
+        </button>
+      </div>
+    </div>
   </main>
 </template>
 
-<style></style>
+<style>
+</style>

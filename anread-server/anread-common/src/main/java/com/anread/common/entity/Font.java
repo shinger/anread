@@ -1,5 +1,6 @@
 package com.anread.common.entity;
 
+import com.anread.common.annotation.IpReplace;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -31,5 +32,6 @@ public class Font {
     /**
      * 字体URL
      */
+    @IpReplace
     private String url;
 }
