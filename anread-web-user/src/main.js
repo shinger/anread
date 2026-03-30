@@ -6,6 +6,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import "vue-toast-notification/dist/theme-default.css";
 import createToast from "vue-toast-notification";
+import 'element-ai-vue/dist/index.css'
 
 import App from "./App.vue";
 import router from "./router";

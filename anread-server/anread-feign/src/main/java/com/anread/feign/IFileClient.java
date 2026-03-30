@@ -13,7 +13,7 @@ public interface IFileClient {
     @PostMapping(value = "/file/common", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     Result<String> uploadCommonFile(@RequestPart("file") MultipartFile file);
 
-    @PostMapping(value = "/file/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/file/book", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     Result<FileVo> uploadBook(@RequestPart("file") MultipartFile file);
 
     @GetMapping("/file/{fileId}")

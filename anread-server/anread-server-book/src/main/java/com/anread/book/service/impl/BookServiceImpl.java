@@ -2,7 +2,7 @@ package com.anread.book.service.impl;
 
 import com.anread.book.mapper.SysConfigMapper;
 import com.anread.book.mapper.UserShelfMapper;
-import com.anread.book.repositry.BookRepository;
+import com.anread.book.repository.BookRepository;
 import com.anread.common.dto.Result;
 import com.anread.common.entity.Book;
 import com.anread.common.entity.Category;

@@ -43,6 +43,11 @@ public class JWTFilter implements GlobalFilter, Ordered {
 
         // 其他接口，校验token
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
+        // pdf-converter接口，自动放行
+        if ("s8g0ls-1k3f9".equals(token)) {
+            return chain.filter(exchange);
+        }
+
         // 没有token，自动放行
         if (token != null) {
             // 获取请求头中令牌

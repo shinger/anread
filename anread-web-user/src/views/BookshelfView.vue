@@ -1,11 +1,17 @@
 <script setup>
 import FileUpload from "@/components/FileUpload.vue";
+import CheckIcon from "@/components/icons/CheckIcon.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 import request from "@/utils/request.js";
+import { removeBatchShelf } from "@/api/book-api.js";
+import { useRouter } from "vue-router";
 
 const books = ref([]);
 const pageNum = ref(1);
 const PAGE_SIZE = 30;
+const isChecking = ref(false);
+const selectedBookIds = ref([]);
+const router = useRouter();
 
 onMounted(() => {
   loadBooks();
@@ -44,12 +50,42 @@ const handleScroll = () => {
     }
   }, 500);
 };
+
+const handleSelect = (bookId) => {
+  console.log(bookId);
+  if (selectedBookIds.value.includes(bookId)) {
+    selectedBookIds.value = selectedBookIds.value.filter((id) => id !== bookId);
+  } else {
+    selectedBookIds.value.push(bookId);
+  }
+};
+
+const handleRemove = async () => {
+  console.log(selectedBookIds.value);
+  await removeBatchShelf(selectedBookIds.value);
+  loadBooks();
+  selectedBookIds.value = [];
+  isChecking.value = false;
+  router.push("/bookshelf");
+};
 </script>
 
 <template>
   <main class="w-full px-5">
+    <div class="flex justify-between items-center mt-4" v-show="!isChecking">
+      <p class="text-xl font-bold">书架</p>
+      <CheckIcon size="24" fixing @click="isChecking = true" />
+    </div>
+    <div class="flex justify-between items-center mt-4" v-show="isChecking">
+      <button>全选</button>
+      <p class="text-xl font-bold">选择书籍</p>
+      <button @click="isChecking = false">取消</button>
+    </div>
+    <div class="flex justify-end" v-show="isChecking">
+      <button @click="handleRemove" class="text-red-500">移除书架</button>
+    </div>
     <div
-      class="grid grid-cols-2 mt-12 sm:flex sm:flex-row sm:flex-wrap sm:justify-start"
+      class="grid grid-cols-2 mt-4 sm:flex sm:flex-row sm:flex-wrap sm:justify-start"
     >
       <a
         :href="`/book/${book.id}`"
@@ -59,7 +95,19 @@ const handleScroll = () => {
       >
         <figure class="relative inline-block">
           <img :src="book.cover" alt="" class="w-36 h-50 object-fill" />
-          <figcaption v-if="book.readFinished" class="absolute top-0 right-0 bg-[#e9a838] text-sm text-white px-2">读完</figcaption>
+          <figcaption
+            v-if="book.readFinished"
+            class="absolute top-0 right-0 bg-[#e9a838] text-sm text-white px-2"
+          >
+            读完
+          </figcaption>
+          <CheckIcon
+            class="absolute bottom-1 right-1 z-10"
+            size="24"
+            v-show="isChecking"
+            @click="handleSelect(book.id)"
+          />
+          <span class="privateTag" v-if="book.isPrivate"></span>
         </figure>
         <div class="mt-2 text-center w-36 truncate">{{ book.title }}</div>
       </a>
@@ -71,44 +119,14 @@ const handleScroll = () => {
 </template>
 
 <style lang="less" scoped>
-/*
-main {
-  width: 100%;
+.privateTag {
   position: absolute;
-  top: 0;
-  padding-inline: var(--bg-padding);
+  left: 0;
+  bottom: 0;
+  width: 28px;
+  height: 28px;
+  background: url("/private_tag.png")
+    no-repeat;
+  background-size: 100%;
 }
-.shelf-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-top: 40px;
-  .shelf-book {
-    content-visibility: auto;
-    position: relative;
-    display: block;
-    width: 128px;
-    height: auto;
-    margin-right: 36px;
-    margin-bottom: 44px;
-    .book-cover {
-      width: 100%;
-      height: 185px;
-      img {
-        vertical-align: top;
-        width: 100%;
-        height: 100%;
-        background-color: rgb(216, 216, 216);
-        object-fit: cover;
-      }
-    }
-    .title {
-      margin-top: 14px;
-      font-size: 15px;
-      line-height: 18px;
-      text-align: center;
-    }
-  }
-}*/
 </style>

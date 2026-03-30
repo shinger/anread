@@ -51,11 +51,12 @@ public class FileServiceImpl implements FileService {
         // 获取文件MD5
         String md5 = MD5Uitl.generateMD5(fileBytes);
         // 判断文件是否存在
-        boolean exists = fileMapper.exists(new LambdaQueryWrapper<BookFile>()
+        BookFile existFile = fileMapper.selectOne(new LambdaQueryWrapper<BookFile>()
                 .eq(BookFile::getId, md5));
-        if (exists) {
+        if (existFile != null) {
             FileVo fileVo = FileVo.builder()
                     .id(md5)
+                    .fileUrl(existFile.getFileUrl())
                     .coverImg(MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_BOOKS + "/" + md5 + "/cover.jpeg")
                     .build();
             // 返回
@@ -86,7 +87,8 @@ public class FileServiceImpl implements FileService {
 
         FileVo fileVo = FileVo.builder()
                 .id(md5)
-                .coverImg(MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_BOOKS + "/" + md5 + "/cover.jpeg")
+                .fileUrl(MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_BOOKS + "/" + md5 + "/" + filename)
+                .coverImg(coverBytes != null ? MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_BOOKS + "/" + md5 + "/cover.jpeg" : MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_CONFIG + "/images/book_cover_default.png" )
                 .build();
         // 返回
         return Result.<FileVo>success().data(fileVo).state(StateEnum.UPLOAD_SUCCESS);

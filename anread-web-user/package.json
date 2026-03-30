@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
+    "element-ai-vue": "^0.1.6",
     "epubjs": "file:lib/epubjs",
     "js-md5": "^0.8.3",
     "pinia": "^2.1.7",

@@ -12,7 +12,7 @@
         <a
           class="flex cursor-pointer"
           v-if="bookInformation"
-          :href="`/introduction/${route.params.id}`"
+          @click="goToIntroduction(bookInformation)"
         >
           <img
             class="w-15 h-22 object-cover mr-3"
@@ -122,6 +122,10 @@
           </li>
         </ul>
       </div>
+      <!-- AI -->
+      <div v-show="openSetting == 5" class="w-full h-full relative">
+        <AiChat />
+      </div>
     </div>
     <!-- 底部菜单栏弹窗 -->
     <div
@@ -134,7 +138,7 @@
         <a
           class="flex cursor-pointer"
           v-if="bookInformation"
-          :href="`/introduction/${route.params.id}`"
+          @click="goToIntroduction(bookInformation)"
         >
           <img
             class="w-15 h-22 object-cover mr-3"
@@ -438,6 +442,7 @@
 import CloseIcon from "@/components/icons/CloseIcon.vue";
 import IdeaIcon from "@/components/icons/IdeaIcon.vue";
 import QuoteIcon from "@/components/icons/QuoteIcon.vue";
+import AiChat from "@/components/AiChat.vue";
 import Epub, { Book, EpubCFI, Layout, Rendition } from "epubjs";
 import Themes from "epubjs/src/themes";
 import { ref, onUnmounted, onMounted } from "vue";
@@ -528,6 +533,14 @@ onMounted(() => {
     }
   });
 });
+
+// 跳转目录
+const goToIntroduction = (book) => {
+  if (book.isPrivate) {
+    return;
+  }
+  window.location.href = `/introduction/${book.id}`;
+};
 
 // 切换划线颜色
 const changeHighlightColor = (color, item) => {

@@ -10,10 +10,13 @@ public class MinioBucket {
     // 静态常量（不可修改，通过 Spring 配置初始化）
     public static String BUCKET_BOOKS;
     public static String BUCKET_COMMON;
+    public static String BUCKET_CONFIG;
     public static String BASE_URL;
     public static int PORT = 9000;
 
     // 非静态变量，用于接收 Spring 注入的配置值
+    @Value("${minio.buckets.config}")
+    private String bucketConfig;
     @Value("${minio.buckets.common}")
     private String bucketCommon;
 
@@ -29,6 +32,7 @@ public class MinioBucket {
         // 为静态常量赋值（仅初始化一次，后续无法修改）
         BUCKET_BOOKS = this.bucketBooks;
         BUCKET_COMMON = this.bucketCommon;
-        BASE_URL = this.endpoint + ":" + PORT;
+        BUCKET_CONFIG = this.bucketConfig;
+        BASE_URL = "http://" + this.endpoint + ":" + PORT;
     }
 }

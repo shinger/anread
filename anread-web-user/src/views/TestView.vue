@@ -1,78 +1,75 @@
 <template>
-  <div ref="testRef" class="container">
-    长按选中这段文字，测试坐标是否正常
+  <button class="switch-btn" @click="variant = 'updown'">垂直</button>
+  <button class="switch-btn" @click="variant = 'default'">水平</button>
+  <button class="switch-btn" @click="loading = true">加载中</button>
+  <button class="switch-btn" @click="inputRef?.focus()">自动聚焦</button>
+  <button class="switch-btn" @click="getTextContent()">获取输入框text</button>
+  <button class="switch-btn" @click="getJSONContent()">获取输入框json</button>
+
+  <div class="input-content" v-if="inputContent">{{ inputContent }}</div>
+
+  <div class="wapper" :class="{ 'focus-class': focusClass }">
+    <ElASender
+      ref="inputRef"
+      v-model="content"
+      v-model:loading="loading"
+      :placeholder
+      :variant
+      @focus="focusClass = true"
+      @blur="focusClass = false"
+    >
+    </ElASender>
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+<script setup lang="ts">
+import { ElASender } from 'element-ai-vue'
+import { ref, useTemplateRef } from 'vue'
 
-const testRef = ref(null);
-// 实时记录触摸坐标（核心：全程更新，不依赖单次事件）
-let lastTouchX = 0;
-let lastTouchY = 0;
+const content = ref(``)
+const variant = ref<'default' | 'updown'>('default')
+const focusClass = ref(false)
+const placeholder = ref(`请输入聊天内容`)
+const inputRef = useTemplateRef('inputRef')
+const loading = ref(false)
 
-// 1. 触摸开始：初始化坐标 + 开始实时监听
-const handleTouchStart = (e) => {
-  const touch = e.targetTouches[0];
-  lastTouchX = touch.clientX;
-  lastTouchY = touch.clientY;
-  console.log("【触摸开始】", lastTouchX, lastTouchY);
-};
+const inputContent = ref('')
 
-// 2. 触摸移动：实时更新坐标（即使长按选中文本，touchmove仍会触发）
-const handleTouchMove = (e) => {
-  const touch = e.targetTouches[0];
-  lastTouchX = touch.clientX;
-  lastTouchY = touch.clientY;
-  // 可选：打印移动过程坐标，验证实时更新
-  // console.log("【触摸移动】", lastTouchX, lastTouchY);
-};
-
-// 3. 文本选择变化：直接用实时记录的坐标（不再依赖touchend）
-const handleSelectionChange = () => {
-  const selectedText = window.getSelection().toString().trim();
-  if (selectedText) {
-    console.log("【长按选中文本】最终坐标：", lastTouchX, lastTouchY);
-  } else {
-    console.log("【未选中文本】坐标：", lastTouchX, lastTouchY);
-  }
-};
-
-// 4. 绑定所有触摸事件（覆盖全生命周期）
-onMounted(() => {
-  if (testRef.value) {
-    // 绑定touchstart：初始记录
-    window.addEventListener('touchstart', handleTouchStart);
-    // 绑定touchmove：实时更新（关键！选中文本时仍会触发）
-    // testRef.value.addEventListener('touchmove', handleTouchMove, { passive: true });
-  }
-  console.log(window.document)
-  // 监听文本选择事件（触发时直接用最后记录的坐标）
-  document.addEventListener('selectionchange', handleSelectionChange);
-});
-
-// 5. 卸载时移除事件
-onUnmounted(() => {
-  if (testRef.value) {
-    testRef.value.removeEventListener('touchstart', handleTouchStart);
-    testRef.value.removeEventListener('touchmove', handleTouchMove);
-  }
-  document.removeEventListener('selectionchange', handleSelectionChange);
-});
+const getTextContent = () => {
+  inputContent.value = inputRef.value?.editor()?.getText() || ''
+}
+const getJSONContent = () => {
+  inputContent.value = JSON.stringify(inputRef.value?.editor()?.getJSON()) || ''
+}
 </script>
 
-<style scoped>
-.container {
-  width: 100vw;
-  height: 200px;
-  border: 1px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  /* 保留文本选择能力，不做任何阻止 */
-  user-select: text;
-  -webkit-user-select: text;
+<style scoped lang="less">
+html.dark {
+  .wapper {
+    border-color: rgba(121, 121, 121, 0.6);
+
+    &.focus-class {
+      border-color: rgba(#fff, 0.6); /* ✅ 正确写法 */
+      /* 或者：border-color: rgba(255, 255, 255, 0.6); */
+    }
+  }
+}
+
+.input-content {
+  margin: 10px 0;
+  border: 1px solid #eee;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.wapper {
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px;
+  border: 1px solid rgba(17, 25, 37, 0.15);
+
+  &.focus-class {
+    border-color: rgba(17, 25, 37, 0.45);
+  }
 }
 </style>

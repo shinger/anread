@@ -1,6 +1,6 @@
 package com.anread.book.service.impl;
 
-import com.anread.book.repositry.BookRepository;
+import com.anread.book.repository.BookRepository;
 import com.anread.common.dto.ReadingRecordDto;
 import com.anread.common.dto.Result;
 import com.anread.common.entity.ReadingRecord;
@@ -56,8 +56,10 @@ public class ReadingRecordServiceImpl implements ReadingRecordService {
 
         if (existReadingRecord == null) {
             // 第一次阅读，直接插入
-            if (readingRecordNew.getReadingDuration() > 20) {
+            if (readingRecordNew.getReadingDuration() > 1) {
                 readingRecordNew.setReadingStatus(ReadingStatus.READING.getStatus());
+            } else {
+                readingRecordNew.setReadingStatus(ReadingStatus.UNREAD.getStatus());
             }
 
             readingRecordMapper.insert(readingRecordNew);

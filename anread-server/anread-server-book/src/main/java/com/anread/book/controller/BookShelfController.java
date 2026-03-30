@@ -5,6 +5,7 @@ import com.anread.book.service.BookShelfService;
 import com.anread.common.vo.ShelfBookVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -65,6 +66,22 @@ public class BookShelfController {
     @DeleteMapping("/remove/{id}")
     public Result removeShelf(@RequestHeader("X-User-ID") String userId, @PathVariable("id") String bookId) {
         return bookShelfService.removeShelf(userId, bookId);
+    }
+
+    @DeleteMapping("/remove/batch")
+    public Result removeBatchShelf(@RequestHeader("X-User-ID") String userId, @RequestBody List<String> bookIds) {
+        return bookShelfService.removeBatchShelf(userId, bookIds);
+    }
+
+    /**
+     * 上传图书到书架
+     * @param userId 用户ID
+     * @param file 图书文件
+     * @return
+     */
+    @PostMapping("/upload")
+    public Result uploadBook(@RequestHeader("X-User-ID") String userId, @RequestParam("file") MultipartFile file) {
+        return bookShelfService.uploadBook(userId, file);
     }
 
 }

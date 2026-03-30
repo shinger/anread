@@ -2,6 +2,7 @@ package com.anread.book.service;
 
 import com.anread.common.dto.Result;
 import com.anread.common.vo.ShelfBookVo;
+import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -35,4 +36,20 @@ public interface BookShelfService {
      * @return
      */
     Result removeShelf(String userId, String bookId);
+
+    /**
+     * 批量移出书架
+     * @param bookIds 书本ID列表
+     * @return
+     */
+    Result removeBatchShelf(String userId, List<String> bookIds);
+
+    /**
+     *
+     * @param userId 用户ID
+     * @param file 图书文件
+     * @return
+     */
+    Result uploadBook(String userId, MultipartFile file);
+
 }

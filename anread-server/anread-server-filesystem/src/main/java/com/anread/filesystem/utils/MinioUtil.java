@@ -125,7 +125,7 @@ public class MinioUtil {
 
     public void uploadEpub(String fileId, String fileName, String contentType, byte[] coverBytes, byte[] fileBytes) {
         ByteArrayInputStream fileInputStream = new ByteArrayInputStream(fileBytes);
-        ByteArrayInputStream coverInputStream = new ByteArrayInputStream(coverBytes);
+        ByteArrayInputStream coverInputStream = coverBytes != null ? new ByteArrayInputStream(coverBytes) : null;
         String bookName = fileName.split("\\.")[0];
         try {
             minioClient.putObject(
@@ -137,15 +137,17 @@ public class MinioUtil {
                             .build()
             );
             log.info("【Minio - Upload Epub File 】 路径：{} 信息：上传成功", fileId + "/" + fileName);
-            minioClient.putObject(
-                    PutObjectArgs.builder()
-                            .bucket("books") // 存储桶名称
-                            .object(fileId + "/cover.jpeg") // 文件名
-                            .stream(coverInputStream, coverBytes.length, -1) // 字节数组输入流
-                            .contentType("image/jpeg") // MIME类型
-                            .build()
-            );
+            if (coverInputStream != null) {
+                minioClient.putObject(
+                        PutObjectArgs.builder()
+                                .bucket("books") // 存储桶名称
+                                .object(fileId + "/cover.jpeg") // 文件名
+                                .stream(coverInputStream, coverBytes.length, -1) // 字节数组输入流
+                                .contentType("image/jpeg") // MIME类型
+                                .build()
+                );
                 log.info("【Minio - Upload Epub File 】 路径：{} 信息：上传成功", fileId + "/cover.jpeg");
+            }
         }  catch (MinioException | NoSuchAlgorithmException | InvalidKeyException | IOException e) {
             log.error("【Minio - Upload Epub File 】 路径：{} 信息：{}", fileId + "/" + fileName, e.getMessage());
             throw new BizException(StateEnum.UPDATE_FAILED);

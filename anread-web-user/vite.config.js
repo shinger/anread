@@ -16,6 +16,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      "/api/convert": {
+        target: "http://host.docker.internal:7000",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/convert/, "/convert"),
+      },
       "/api": {
         // target: "http://127.0.0.1:8000",
         target: "http://host.docker.internal:8000",

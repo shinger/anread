@@ -7,6 +7,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root   # read from .env file
       MYSQL_DATABASE: anread-mysql                # auto create database
+      MYSQL_USER: ocr_user
+      MYSQL_PASSWORD: ocr_password
     volumes:
       - anyueread_mysql-data:/var/lib/mysql                # mysql volume
       - ./mysql-config/conf.d:/etc/mysql/conf.d         # mysql config
@@ -36,7 +38,6 @@ services:
     environment:
       - MINIO_ROOT_USER=minioadmin       
       - MINIO_ROOT_PASSWORD=minioadmin   
-      - MINIO_SERVER_URL=http://192.168.5.12:9000
     command: server /data --address 0.0.0.0:9000 --console-address 0.0.0.0:9001
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -161,6 +162,53 @@ services:
     volumes:
       - anread_redis-data:/data
 
+  # anread-ocr
+  pdf2epub:
+    build:
+      context: ./anread-ocr
+      dockerfile: Dockerfile
+    image: pdf2epub:latest
+    container_name: pdf2epub
+    restart: no
+    ports:
+      - "7000:7000"
+    environment:
+      # Tesseract binary location (auto-detected; override if needed)
+      # TESSERACT_CMD: /usr/bin/tesseract
+      PYTHONUNBUFFERED: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      BOOK_API_URL: "http://host.docker.internal:8000/book-api/bookshelf/upload"
+      AUTHORIZATION_TOKEN: "s8g0ls-1k3f9"
+    volumes:
+      # Optional: mount a host directory to persist converted files
+      # Remove or comment out if you don't need persistence
+      - pdf2epub_tmp:/tmp/pdf2epub
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:7000/health')"]
+      interval: 300s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    # Resource limits — OCR on large PDFs is CPU-intensive
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 4G
+        reservations:
+          cpus: "1"
+          memory: 512M
+    develop:
+      watch:
+        - action: sync
+          path: ./anread-ocr
+          target: usr/local/anread/anread-ocr
+          ignore:
+            - node_modules
+        - action: rebuild
+          path: ./anread-ocr/app/main.py
+
 # network config
 networks:
   anread-network:
@@ -180,3 +228,5 @@ volumes:
     external: true
   anread_redis-data:
     external: true
+  pdf2epub_tmp:
+    driver: local

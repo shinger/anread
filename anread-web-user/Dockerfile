@@ -5,7 +5,7 @@ COPY package.json ./
 COPY lib ./lib
 COPY src ./src
 COPY public ./public
-COPY index.html jsconfig.json vite.config.js ./
+COPY index.html jsconfig.json vite.config.js .env.development .env.production ./
 
 # 将本地包复制到 node_modules
 RUN mkdir -p node_modules/epubjs node_modules/marks-pane && \

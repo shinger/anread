@@ -1,10 +1,9 @@
 package com.anread.book.service.impl;
 
 import com.anread.book.mapper.BookCommentMapper;
-import com.anread.book.mapper.BookMapper;
 import com.anread.book.mapper.CommentLikeMapper;
 import com.anread.book.mapper.SubCommentMapper;
-import com.anread.book.repositry.BookRepository;
+import com.anread.book.repository.BookRepository;
 import com.anread.book.service.BookCommentService;
 import com.anread.common.dto.Result;
 import com.anread.common.entity.Book;
@@ -19,7 +18,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import reactor.core.publisher.Mono;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -72,6 +70,12 @@ public class BookCommentServiceImpl implements BookCommentService {
             recommendSum += bookComment.getRecommendation() == 1 ? 1 : 0;
         }
         BookCommentListVO bookCommentListVO = new BookCommentListVO();
+        if (bookComments.isEmpty()) {
+            bookCommentListVO.setAvgScore(0.0);
+            bookCommentListVO.setAvgRecommendation(0.0);
+            bookCommentListVO.setComments(bookComments);
+            return Result.<BookCommentListVO>success().data(bookCommentListVO);
+        }
         double avgScore = (double)scoreSum / bookComments.size();
         double avgRecommend = (double)recommendSum * 100 / bookComments.size();
         DecimalFormat df = new DecimalFormat("0.00");

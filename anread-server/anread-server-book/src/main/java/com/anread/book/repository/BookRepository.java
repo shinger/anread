@@ -1,13 +1,11 @@
-package com.anread.book.repositry;
+package com.anread.book.repository;
 
 import com.anread.common.entity.Book;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -41,7 +39,7 @@ public interface BookRepository extends ReactiveMongoRepository<Book, String> {
      *
      * @return 随机书本列表
      */
-    @Aggregation(pipeline = {"{ $match: { status: 1 } }","{ $sample: { size: 4 } }"})
+    @Aggregation(pipeline = {"{ $match: { status: 1, isPrivate: false } }","{ $sample: { size: 4 } }"})
     Flux<Book> findByRandom();
 
     /**

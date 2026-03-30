@@ -2,7 +2,6 @@ package com.anread.common.entity;
 
 import com.anread.common.annotation.IpReplace;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -92,4 +91,8 @@ public class Book {
      */
     @IpReplace
     private String epubURL;
+    /**
+     * 是否私有
+     */
+    private Boolean isPrivate;
 }

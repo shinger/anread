@@ -16,6 +16,4 @@ public interface BookMapper extends BaseMapper<Book> {
     @Update("update book set readership = readership + 1 where id = #{id}")
     void incrementReadership(@Param("id") String id);
 
-
-
 }

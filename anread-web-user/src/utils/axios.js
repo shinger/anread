@@ -7,6 +7,7 @@ const toast = useToast();
 
 // 修改baseURL：开发环境用/api（走vite代理），生产环境用完整IP
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL
+// axios.defaults.baseURL = '/api'
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
@@ -27,9 +28,7 @@ axios.interceptors.request.use(
 
 // 响应拦截器（不变，仅优化错误提示）
 axios.interceptors.response.use((res) => {
-  if (res.data === undefined || typeof res.data !== "object") {
-    return Promise.reject(res);
-  }
+  
   if (res.data.code != "200") {
     if (res.data.message) toast.error(res.data.message);
     if (res.data.code == "401") {

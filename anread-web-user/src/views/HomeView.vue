@@ -15,6 +15,7 @@
         <div>
           <h1 class="font-bold text-xl">继续阅读</h1>
         </div>
+        <a href="/bookshelf" class="text-blue-500 text-sm">查看更多</a>
       </div>
       <div
         class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 justify-center"
@@ -29,7 +30,7 @@
           >
             <a
               :href="`/book/${book.id}`"
-              class="w-full h-full flex items-center"
+              class="w-full h-full flex items-center relative"
             >
               <div class="flex items-center">
                 <img
@@ -38,10 +39,11 @@
                   class="w-16 h-24 ml-4 object-fit"
                 />
                 <div class="flex flex-col justify-center ml-4">
-                  <p class="text-md">{{ book.title }}</p>
+                  <p class="text-md w-36 sm:w-48 truncate">{{ book.title }}</p>
                   <p class="text-xs text-gray-500 mt-2">{{ book.author }}</p>
                 </div>
               </div>
+              <span class="privateTag" v-if="book.isPrivate"></span>
             </a>
           </li>
         </ul>
@@ -77,7 +79,6 @@
       </ul>
     </section>
     <section class="h-20"></section>
-
   </main>
 </template>
 
@@ -110,77 +111,14 @@ const changeBatch = () => {
 </script>
 
 <style lang="less" scoped>
-.home-wrapper {
+.privateTag {
   position: absolute;
-  top: 0;
   left: 0;
-  right: 0;
-  background: var(--color-background-light);
-  padding-top: 1rem;
-  padding-inline: var(--bg-padding);
-}
-
-.menu-list {
-  display: flex;
-  justify-content: center;
-  .menu-wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
-    .menu-item {
-      text-align: center;
-      padding: 20px;
-    }
-  }
-}
-
-.recommend-list {
-  margin-block: 2rem;
-  display: flex;
-  flex-direction: column;
-  .recommend-title {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    line-height: 30px;
-    .change {
-      color: #969696;
-      font-size: 14px;
-      margin-left: 12px;
-    }
-  }
-}
-
-.content-list {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-block: 1rem;
-  .book-card {
-    width: 228px;
-    height: 320px;
-    margin: 12px;
-    padding: 10px;
-    background: var(--color-background-pure);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-      transform: scale(1.05);
-      transition: transform 0.5s ease;
-    }
-    img {
-      width: 120px;
-      height: 180px;
-      margin-block: 20px;
-    }
-    .book-author {
-      color: var(--color-little-word);
-    }
-  }
+  bottom: 0;
+  width: 28px;
+  height: 28px;
+  background: url("/private_tag.png")
+    no-repeat;
+  background-size: 100%;
 }
 </style>

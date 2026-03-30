@@ -21,6 +21,10 @@ public class UserShelf {
      */
     private String bookId;
     /**
+     * 是否私有
+     */
+    private Integer isPrivate;
+    /**
      * 更新时间戳
      */
     private Timestamp updateTimestamp;

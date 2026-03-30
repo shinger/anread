@@ -26,6 +26,7 @@ import Avatar from "@/components/Avatar.vue";
 import LikeIcon from "@/components/icons/LikeIcon.vue";
 import CommentIcon from "@/components/icons/CommentIcon.vue";
 import ArrowBackIcon from "@/components/icons/ArrowBackIcon.vue";
+import AiIcon from "@/components/icons/AiIcon.vue";
 import { getPublicIdeas } from "@/api/user-api.js";
 import { isMobile } from "@/utils/device.js";
 
@@ -157,6 +158,7 @@ const onSetting = (i) => {
     case 1:
     case 2:
     case 3:
+    case 5:
       if (openSetting.value == i) {
         openSetting.value = 0;
         return;
@@ -308,6 +310,17 @@ const goBack = () => {
               />
             </a>
           </button>
+          <!-- AI -->
+          <button
+            class="p-2.5 rounded-full border border-gray-100 bg-white dark:bg-black dark:border-gray-500 shadow-sm"
+            @click="onSetting(5)"
+          >
+            <a>
+              <AiIcon
+                :size="20"
+              />
+            </a>
+          </button>
         </div>
       </div>
     </div>
@@ -322,7 +335,8 @@ const goBack = () => {
     <!-- 操作弹窗 -->
     <div
       ref="popupRef"
-      class="absolute left-10 right-10 hidden bg-white dark:bg-black rounded-lg shadow-md p-0.5 z-100 min-w-22.5"
+      class="absolute left-10 sm:left-0 hidden bg-white dark:bg-black rounded-lg shadow-md p-0.5 z-100 min-w-22.5"
+      :class="{'right-10': isMobileDevice}"
     >
       <div
         @click="readAreaRef.handleCopy()"
@@ -422,7 +436,7 @@ const goBack = () => {
     <!-- 手机顶部菜单栏 -->
     <div
       v-show="showBottomMenu"
-      class="z-50 fixed top-0 left-0 right-0 flex justify-between items-center p-2 bg-white dark:bg-black border-b border-gray-600 sm:hidden"
+      class="z-50 fixed top-0 left-0 right-0 flex justify-between items-center p-2 bg-white dark:bg-black border-gray-600 sm:hidden"
     >
       <div class="flex items-center justify-start w-full mx-10">
         <button

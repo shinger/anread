@@ -45,4 +45,8 @@ public class ShelfBookVo {
      * 是否读完
      */
     private Boolean readFinished;
+    /**
+     * 是否私有
+     */
+    private Boolean isPrivate;
 }

@@ -46,6 +46,10 @@
           <RouterLink to="/bookshelf">书架</RouterLink>
         </li>
         <span class="w-full block h-px sm:h-4 sm:w-0.5 bg-gray-200"></span>
+        <li class="h-8 mx-2 lg:mx-4">
+          <RouterLink to="/upload">上传</RouterLink>
+        </li>
+        <span class="w-full block h-px sm:h-4 sm:w-0.5 bg-gray-200"></span>
         <li class="h-8 mx-2 lg:mx-4" v-if="!loginStore.isLogin">
           <RouterLink to="/login">登录</RouterLink>
         </li>

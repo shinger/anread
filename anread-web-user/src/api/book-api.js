@@ -40,6 +40,11 @@ const addToShelf = (id) => {
 const removeFromShelf = (id) => {
   return axios.delete(`${baseURL}/bookshelf/remove/${id}`);
 };
+const removeBatchShelf = (list) => {
+  return axios.delete(`${baseURL}/bookshelf/remove/batch`, {
+    data: list,
+  });
+}
 const markFinished = (id) => {
   return axios.post(`${baseURL}/reading/record/finished/${id}`);
 };
@@ -81,6 +86,22 @@ const updateComment = (data) => {
 const deleteComment = (id) => {
   return axios.delete(`${baseURL}/book_comment/${id}`);
 };
+const uploadPrivateBook = (formData) => {
+  return axios.post(`${baseURL}/bookshelf/upload`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+}
+const convertPdfToEpub = (formData, userId) => {
+  console.log(userId)
+  return axios.post(`/convert`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      "userId": userId,
+    },
+  });
+}
 
 export {
   getShelfBooks,
@@ -93,6 +114,7 @@ export {
   getIsInShelf,
   addToShelf,
   removeFromShelf,
+  removeBatchShelf,
   markFinished,
   getFonts,
   searchBooks,
@@ -103,4 +125,6 @@ export {
   postSubComment,
   updateComment,
   deleteComment,
+  uploadPrivateBook,
+  convertPdfToEpub,
 };

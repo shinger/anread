@@ -9,5 +9,8 @@ export const useUserStore = defineStore('user', {
     setUserInfo(userInfo) {
       this.userInfo = userInfo;
     },
+    getUserId() {
+      return this.userInfo?.userId || null;
+    },
   },
 });
