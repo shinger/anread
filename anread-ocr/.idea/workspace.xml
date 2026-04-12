@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e369981b-a3c6-4094-98e2-7b78eebc38f0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-common/src/main/java/com/anread/common/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-common/src/main/java/com/anread/common/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-feign/target/anread-feign-1.0.0-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-feign/target/anread-feign-1.0.0-sources.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-feign/target/anread-feign-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-feign/target/anread-feign-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-server-book/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-server-book/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-server-book/src/main/java/com/anread/book/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-server-book/src/main/java/com/anread/book/service/impl/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-server-book/target/anread-server-book-1.0.0-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-server-book/target/anread-server-book-1.0.0-sources.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-server-book/target/anread-server-book-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-server-book/target/anread-server-book-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-server-book/target/classes/com/anread/book/service/impl/BookServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-server-book/target/classes/com/anread/book/service/impl/BookServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-server-book/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-server-book/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-server-book/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-server-book/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-server-user/src/main/java/com/anread/user/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-server-user/src/main/java/com/anread/user/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-server/anread-server-user/src/main/java/com/anread/user/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-server/anread-server-user/src/main/java/com/anread/user/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-web-user/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-web-user/.env.development" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-web-user/src/api/book-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-web-user/src/api/book-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-web-user/src/components/AiChat.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-web-user/src/components/AiChat.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-web-user/src/components/ReadArea.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-web-user/src/components/ReadArea.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-web-user/src/utils/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-web-user/src/utils/axios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-web-user/src/views/BookViewV2.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-web-user/src/views/BookViewV2.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../anread-web-user/src/views/TestView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../anread-web-user/src/views/TestView.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="3C6V589XW8RIEncr9wGkZVA8qFf" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "master",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.31033.139" />
+        <option value="bundled-python-sdk-2653e85de345-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.31033.139" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e369981b-a3c6-4094-98e2-7b78eebc38f0" name="Changes" comment="" />
+      <created>1775705821890</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775705821890</updated>
+      <workItem from="1775705823709" duration="275000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

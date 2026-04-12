@@ -1,5 +1,6 @@
 package com.anread.admin.service.impl;
 
+import com.anread.admin.config.RabbitMQConfig;
 import com.anread.admin.repositry.BookRepositry;
 import com.anread.common.entity.Category;
 import com.anread.admin.mapper.CategoryMapper;
@@ -11,6 +12,7 @@ import com.anread.common.entity.Book;
 import com.anread.common.entity.BookFile;
 import com.anread.common.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +35,9 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepositry bookRepositry;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Result createBook(BookVO bookVO) {
@@ -51,13 +56,20 @@ public class BookServiceImpl implements BookService {
             return Result.error("文件不存在");
         }
         bookFile.setReference(true);
+        bookFile.setBookId(book.getId());
+        bookFile.setTitle(bookVO.getTitle());
+        bookFile.setIsVectorized(false);
         fileMapper.updateById(bookFile);
+
+        // 发送文件解析消息
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_BOOK_SPLIT, RabbitMQConfig.ROUTING_BOOK_SPLIT, book.getId());
+
         return Result.success().message("创建成功");
     }
 
     @Override
     public Result<Page<Book>> getBooksPage(long pageNumber, long pageSize) {
-        Page<Book> books = bookRepositry.findAll(PageRequest.of((int) pageNumber, (int) pageSize));
+        Page<Book> books = bookRepositry.findByIsPrivateFalse(PageRequest.of((int) pageNumber, (int) pageSize));
 
         return Result.<Page<Book>>success().data(books);
     }
@@ -145,6 +157,7 @@ public class BookServiceImpl implements BookService {
                 .path(bookFile.getPath())
                 .fileId(bookVO.getFileId())
                 .epubURL(bookFile.getFileUrl())
+                .isPrivate(false)
                 .build();
 
         return book;

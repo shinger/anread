@@ -13,13 +13,18 @@ import com.anread.book.service.BookService;
 import com.anread.feign.IFileClient;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.util.Collections;
@@ -45,8 +50,13 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private ReactiveRedisTemplate<String, String> reactiveRedisTemplate;
 
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
+
     @Autowired
     private SysConfigMapper sysConfigMapper;
+
+    private final static String BLOOM_KEY = "book:bloom";
 
     @Override
     public Mono<Result<List<Book>>> getBooksByCategory(Integer categoryId) {
@@ -109,6 +119,47 @@ public class BookServiceImpl implements BookService {
         }
 
         // 从Redis缓存中获取书本
+        /*return Mono.fromCallable(() -> {
+            Boolean exists = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
+                Object result = connection.execute(
+                        "BF.EXISTS",
+                        BLOOM_KEY.getBytes(StandardCharsets.UTF_8),
+                        bookId.getBytes(StandardCharsets.UTF_8)
+                );
+                return (Long) result == 1L;
+            });
+            return exists != null && exists;
+        }).subscribeOn(Schedulers.boundedElastic())
+                .onErrorReturn(false)
+                .flatMap(exists -> {
+                    if (!exists) {
+                        return Mono.error(new BizException("书本不存在"));
+                    }
+
+                    return bookRepository.findById(bookId)
+                            .switchIfEmpty(Mono.error(new BizException("书本不存在")))
+                            .onErrorMap(e -> new BizException("Feign远程调用失败", e.getMessage()))
+                            .flatMap(book -> Mono.fromCallable(() -> fileClient.getEpubURL(book.getFileId()))
+                                    .subscribeOn(Schedulers.boundedElastic())
+                                    .map(result -> {
+                                        if (!result.isSuccess()) {
+                                            throw new BizException("Feign远程调用失败", result.getMessage());
+                                        }
+                                        log.info("【Feign调用Minio获取Epub URL】 成功: {}", result.getData());
+                                        return result.getData();
+                                    }))
+                            .flatMap(epubUrl -> {
+                                log.info("【存储到Redis缓存】 书本ID: {}, Epub URL: {}", bookId, epubUrl);
+                                return reactiveRedisTemplate.opsForValue()
+                                        .set(bookId, epubUrl, Duration.ofDays(1).minusMinutes(5)) // 缓存1天 - 5分钟
+                                        .thenReturn(epubUrl);
+                            });
+                })
+                .map(epubURL -> {
+                    log.info("【根据书本ID查询书本Epub URL】 书本ID: {}, Epub URL: {}", bookId, epubURL);
+                    return Result.<String>success().data(epubURL);
+                })
+                .doOnError(e -> log.error("【根据书本ID查询书本】 异常: {}", e.getMessage()));*/
         return reactiveRedisTemplate.opsForValue().get(bookId)
                 .switchIfEmpty(Mono.defer(() -> {
                     // 缓存中不存在，从数据库中查询

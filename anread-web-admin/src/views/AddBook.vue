@@ -123,7 +123,7 @@ const { id } = route.query;
 
 const handleChangePressDate = (val) => {
   console.log(state.bookForm);
-}
+};
 
 const state = reactive({
   uploadBookServer: "/uploadbook",
@@ -182,7 +182,8 @@ const state = reactive({
 });
 
 onMounted(() => {
-  if (id) { // 编辑书本时，获取书本详情
+  if (id) {
+    // 编辑书本时，获取书本详情
     adminAPI.requestBookDetail(id).then((res) => {
       console.log(res);
       if (res.pressMonth < 10) {
@@ -203,7 +204,7 @@ onMounted(() => {
       };
       state.categoryId = res.categoryId;
       state.defaultCate = `${res.mainCategory}/${res.subCategory}`;
-      console.log(state)
+      console.log(state);
     });
   }
 });
@@ -263,8 +264,8 @@ const submitAdd = () => {
 };
 // 文件格式校验
 const handleBeforeUpload = (file) => {
-  const sufix = file.name.split(".")[1] || "";
-  if (!["epub"].includes(sufix)) {
+  const split = file.name.split(".");
+  if (split.length > 1 && (split[split.length - 1] || "").toLowerCase() !== "epub") {
     ElMessage.error("请上传 epub 格式的文件");
     return false;
   }

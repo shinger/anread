@@ -28,7 +28,10 @@ axios.interceptors.request.use(
 
 // 响应拦截器（不变，仅优化错误提示）
 axios.interceptors.response.use((res) => {
-  
+  console.log("data:", res.data);
+  if (res.data == null || res.data.code == null) {
+    return res.data;
+  }
   if (res.data.code != "200") {
     if (res.data.message) toast.error(res.data.message);
     if (res.data.code == "401") {

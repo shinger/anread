@@ -1,0 +1,49 @@
+<template>
+  <i class="icon-font flex items-center justify-center">
+    <svg
+      :width="size"
+      :height="size"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 512 512"
+    >
+      <path
+        d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64z"
+        fill="none"
+        stroke="currentColor"
+        stroke-miterlimit="10"
+        stroke-width="32"
+      ></path>
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-miterlimit="10"
+        stroke-width="32"
+        d="M338.29 338.29L448 448"
+      ></path>
+    </svg>
+  </i>
+</template>
+
+<script setup>
+import { computed } from "vue";
+import { useThemeStore } from "@/stores/theme-store.js";
+
+const themeStore = useThemeStore();
+
+const props = defineProps({
+  size: {
+    type: Number,
+    default: 24,
+  },
+  theme: {
+    type: String,
+    default: "light",
+  },
+});
+
+const size = computed(() => props.size);
+</script>
+
+<style></style>

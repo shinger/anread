@@ -7,8 +7,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root   # read from .env file
       MYSQL_DATABASE: anread-mysql                # auto create database
-      MYSQL_USER: ocr_user
-      MYSQL_PASSWORD: ocr_password
     volumes:
       - anyueread_mysql-data:/var/lib/mysql                # mysql volume
       - ./mysql-config/conf.d:/etc/mysql/conf.d         # mysql config
@@ -22,6 +20,19 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  # Qdrant Vector Database
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: anread-qdrant
+    restart: no
+    volumes:
+      - anread_qdrant-data:/qdrant/storage
+    ports:
+      - "6333:6333"
+      - "6334:6334"  # gRPC port
+    environment:
+      - QDRANT__SERVICE__API_KEY=anread@123456
 
   # Minio Object Storage
   minio:
@@ -44,7 +55,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-
 
   # anread-web-user
   web-user:
@@ -162,7 +172,7 @@ services:
     volumes:
       - anread_redis-data:/data
 
-  # anread-ocr
+  # OCR Service for PDF to EPUB conversion
   pdf2epub:
     build:
       context: ./anread-ocr
@@ -209,6 +219,22 @@ services:
         - action: rebuild
           path: ./anread-ocr/app/main.py
 
+  # RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: anread-rabbitmq
+    restart: no
+    networks:
+      - anread-network
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+    ports:  
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - anread_rabbitmq-data:/var/lib/rabbitmq
+
 # network config
 networks:
   anread-network:
@@ -220,6 +246,8 @@ volumes:
     external: true
   anread_mysql-data:
     external: true
+  anread_qdrant-data:
+    external: true
   anread_minio-data:
     external: true
   anread_nacos-data:
@@ -230,3 +258,5 @@ volumes:
     external: true
   pdf2epub_tmp:
     driver: local
+  anread_rabbitmq-data:
+    external: true

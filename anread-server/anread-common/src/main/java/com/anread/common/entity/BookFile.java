@@ -15,6 +15,14 @@ public class BookFile {
      */
     private String id;
     /**
+     * 图书ID
+     */
+    private String bookId;
+    /**
+     * 图书标题
+     */
+    private String title;
+    /**
      * 文件名
      */
     private String filename;
@@ -34,4 +42,8 @@ public class BookFile {
       * 是否被引用
       */
     private Boolean reference;
+    /**
+     * 是否向量化
+     */
+    private Boolean isVectorized;
 }

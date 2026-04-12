@@ -18,6 +18,9 @@ console.log("axios is loaded");
 axios.interceptors.response.use(
   (res) => {
     console.log(res);
+    if (res.data == null) {
+      return res;
+    }
     if (res.data.code != 200) {
       if (res.data.message) ElMessage.error(res.data.message);
       if (res.data.code == 401) {

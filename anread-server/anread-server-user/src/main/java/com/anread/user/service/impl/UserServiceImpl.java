@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
@@ -51,6 +53,8 @@ public class UserServiceImpl implements UserService {
                 .followers(0)
                 .likesCount(0)
                 .token(token)
+                .createTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
                 .build());
 
         return Result.<String>success().data(token);
@@ -128,9 +132,14 @@ public class UserServiceImpl implements UserService {
             return Result.error("阅读时长不能为空");
         }
 
-        int update = userMapper.update(new LambdaUpdateWrapper<User>()
-                .eq(User::getId, userId)
-                .setIncrBy(User::getReadingDuration, duration));
+        User user = userMapper.selectOne(new LambdaQueryWrapper<User>()
+                .eq(User::getId, userId));
+        if (user == null) {
+            return Result.error("用户不存在");
+        }
+
+        int update = userMapper.updateDuration(duration, userId, user.getUpdateTime(), LocalDateTime.now());
+
         if (update != 1) {
             return Result.error("更新阅读记录失败");
         }

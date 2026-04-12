@@ -102,6 +102,15 @@ const convertPdfToEpub = (formData, userId) => {
     },
   });
 }
+const uploadChatRecord = (data) => {
+  return axios.post(`${baseURL}/chat/upload`, data);
+}
+const getChatRecords = (bookId) => {
+  return axios.get(`${baseURL}/chat/records?bookId=${bookId}`);
+}
+const updateChatRecord = (data) => {
+  return axios.put(`${baseURL}/chat/update`, data);
+}
 
 export {
   getShelfBooks,
@@ -127,4 +136,7 @@ export {
   deleteComment,
   uploadPrivateBook,
   convertPdfToEpub,
+  uploadChatRecord,
+  getChatRecords,
+  updateChatRecord,
 };

@@ -27,6 +27,7 @@ import LikeIcon from "@/components/icons/LikeIcon.vue";
 import CommentIcon from "@/components/icons/CommentIcon.vue";
 import ArrowBackIcon from "@/components/icons/ArrowBackIcon.vue";
 import AiIcon from "@/components/icons/AiIcon.vue";
+import SearchIcon from "@/components/icons/SearchIcon.vue";
 import { getPublicIdeas } from "@/api/user-api.js";
 import { isMobile } from "@/utils/device.js";
 
@@ -234,6 +235,13 @@ const goBack = () => {
     router.go(-1);
   }
 };
+
+const openAiSearch = () => {
+  onSetting(5);
+  readAreaRef.value.scrollToBottom();
+  popupRef.value.classList.add("hidden");
+  readAreaRef.value.handleAiSearch();
+};
 </script>
 
 <template>
@@ -313,7 +321,7 @@ const goBack = () => {
           <!-- AI -->
           <button
             class="p-2.5 rounded-full border border-gray-100 bg-white dark:bg-black dark:border-gray-500 shadow-sm"
-            @click="onSetting(5)"
+            @click="onSetting(5);readAreaRef.scrollToBottom()"
           >
             <a>
               <AiIcon
@@ -360,6 +368,13 @@ const goBack = () => {
       >
         <IdeaIcon />
         想法
+      </div>
+      <div
+        @click="openAiSearch()"
+        class="popup-item flex items-center gap-2 px-4 py-2.5 text-sm text-gray-800 dark:text-white cursor-pointer rounded transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200"
+      >
+        <SearchIcon />
+        问AI
       </div>
     </div>
 

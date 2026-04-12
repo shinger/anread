@@ -4,7 +4,7 @@
     <!-- 侧边选项栏弹窗 -->
     <div
       id="setting-wrapper"
-      class="z-50 w-78 hidden sm:block sm:absolute right-0 top-0 bottom-0 bg-gray-100 dark:bg-black border border-gray-300 rounded-2xl overflow-y-scroll p-4"
+      class="z-50 w-80 hidden sm:block sm:absolute right-0 top-0 bottom-0 bg-gray-100 dark:bg-black border border-gray-300 rounded-2xl overflow-y-scroll p-4"
       v-show="openSetting"
     >
       <!-- 目录 -->
@@ -46,7 +46,7 @@
       </div>
       <!-- 字体 -->
       <div class="flex flex-col cursor-pointer" v-show="openSetting == 2">
-        <span>字号大小</span>
+        <span class="mb-4 text-md font-bold">字号大小</span>
         <div
           class="self-center flex justify-between bg-gray-100 rounded-2xl w-full h-8 cursor-pointer"
         >
@@ -57,8 +57,8 @@
             A
           </div>
         </div>
-        <div class="absolute -top-8 h-8 w-8 z-20 cursor-pointer"></div>
-        <div class="z-2 relative left-0 w-full h-8 rounded-2xl">
+        <div class="absolute -top-8 h-6 w-8 z-20 cursor-pointer"></div>
+        <div class="z-2 relative left-0 w-full h-6 rounded-2xl">
           <div
             class="absolute -top-8 h-8 w-8 z-20 cursor-pointer"
             v-for="i in 6"
@@ -75,17 +75,19 @@
           >
             <div class="bg-white rounded-full w-6 h-6"></div>
           </div>
-          <ul class="flex flex-col justify-start my-4">
-            <li
-              class="m-1"
-              v-for="font in fonts"
-              :key="font.id"
-              @click="changeFont(font.fontValue)"
-            >
-              <a>{{ font.fontName }}</a>
-            </li>
-          </ul>
         </div>
+        <span class="text-md font-bold">字体</span>
+        <ul class="flex flex-col justify-start my-2">
+          <li
+            class="m-1 border bg-[#f8f7f7] border-gray-300 rounded-md w-full px-4 h-8 flex items-center"
+            :class="{ 'highlight-font': font.fontValue == currentFont }"
+            v-for="font in fonts"
+            :key="font.id"
+            @click="changeFont(font.fontValue)"
+          >
+            <a>{{ font.fontName }}</a>
+          </li>
+        </ul>
       </div>
       <!-- 笔记 -->
       <div v-show="openSetting == 3" v-if="tocList.length">
@@ -124,7 +126,7 @@
       </div>
       <!-- AI -->
       <div v-show="openSetting == 5" class="w-full h-full relative">
-        <AiChat />
+        <AiChat :bookId="route.params.id" ref="aiChatRef" />
       </div>
     </div>
     <!-- 底部菜单栏弹窗 -->
@@ -483,6 +485,7 @@ const props = defineProps({
   },
 });
 
+const aiChatRef = ref(null);
 const showDot = ref(2);
 const route = useRoute();
 const book = ref(null);
@@ -518,6 +521,7 @@ const touchPos = ref({
   x: 0,
   y: 0,
 });
+const currentFont = ref("");
 
 onMounted(() => {
   isMobileDevice.value = isMobile();
@@ -634,6 +638,8 @@ const changeFontSize = (i) => {
 // 切换字体
 const changeFont = (fontValue) => {
   console.log("change font: ", fontValue);
+  currentFont.value = fontValue;
+  localStorage.setItem("currentFont", fontValue);
   rendition.value.themes.font(fontValue);
   rendition.value.hooks.content.register((contents) => {
     contents.addStylesheetRules(
@@ -822,6 +828,10 @@ const renderEpub = (url) => {
 
   // 展示
   rendition.value.display().then(() => {
+    if (localStorage.getItem("currentFont") != "") {
+      currentFont.value = localStorage.getItem("currentFont");
+      changeFont(currentFont.value);
+    }
     console.log(readingRecord.value);
     // 定位上次阅读位置
     if (
@@ -1173,6 +1183,15 @@ const closeHilightDetail = () => {
   showHilightDetail.value = false;
 };
 
+const scrollToBottom = () => {
+  aiChatRef.value?.scrollToBottomChat();
+};
+
+const handleAiSearch = () => {
+  console.log("handle ai search");
+  aiChatRef.value?.prepareQutation(currentSelectionText.value);
+};
+
 defineExpose({
   renderEpub,
   destroyEpub,
@@ -1185,6 +1204,8 @@ defineExpose({
   handleHighlightIdea,
   handleIdeaEdit,
   closeHilightDetail,
+  scrollToBottom,
+  handleAiSearch,
 });
 </script>
 
@@ -1203,5 +1224,10 @@ defineExpose({
 
 .highLight a {
   color: #c28e32;
+}
+
+.highlight-font {
+  color: #c28e32;
+  background-color: #e7e7e7;
 }
 </style>

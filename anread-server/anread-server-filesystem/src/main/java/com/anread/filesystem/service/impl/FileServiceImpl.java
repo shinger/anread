@@ -1,15 +1,15 @@
 package com.anread.filesystem.service.impl;
 
 import com.anread.common.entity.CommonFile;
-import com.anread.common.exception.BizException;
 import com.anread.common.utils.CommonUtil;
 import com.anread.common.utils.MD5Uitl;
 import com.anread.common.enums.StateEnum;
 import com.anread.common.entity.BookFile;
+import com.anread.common.utils.RandomStringGenerator;
 import com.anread.common.vo.FileVo;
 import com.anread.filesystem.config.MinioBucket;
+import com.anread.filesystem.mapper.BookFileMapper;
 import com.anread.filesystem.mapper.CommonFileMapper;
-import com.anread.filesystem.mapper.FileMapper;
 import com.anread.filesystem.service.FileService;
 import com.anread.filesystem.utils.EpublibUtil;
 import com.anread.filesystem.utils.MinioUtil;
@@ -28,7 +28,7 @@ import java.io.IOException;
 public class FileServiceImpl implements FileService {
 
     @Autowired
-    private FileMapper fileMapper;
+    private BookFileMapper fileMapper;
 
     @Autowired
     private CommonFileMapper commonFileMapper;
@@ -64,7 +64,7 @@ public class FileServiceImpl implements FileService {
         }
 
         // 文件名
-        String filename = file.getOriginalFilename();
+        String filename = "book_file_" + RandomStringGenerator.generate(8) + ".epub";
         // 书名
         String bookName = filename.split("\\.")[0];
         // 文件类型
@@ -74,12 +74,14 @@ public class FileServiceImpl implements FileService {
         // 存入Minio
         minioUtil.uploadEpub(md5, filename, contentType, coverBytes, fileBytes);
 
+        String fileUrl = MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_BOOKS + "/" + md5 + "/" + filename;
+
         fileMapper.insert(BookFile.builder()
                 .id(md5)
                 .filename(filename)
                 .bucket("books")
                 .path(md5 + "/" + filename)
-                .fileUrl(MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_BOOKS + "/" + md5 + "/" + filename)
+                .fileUrl(fileUrl)
                 .reference(false)
                 .build());
 
@@ -87,7 +89,7 @@ public class FileServiceImpl implements FileService {
 
         FileVo fileVo = FileVo.builder()
                 .id(md5)
-                .fileUrl(MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_BOOKS + "/" + md5 + "/" + filename)
+                .fileUrl(fileUrl)
                 .coverImg(coverBytes != null ? MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_BOOKS + "/" + md5 + "/cover.jpeg" : MinioBucket.BASE_URL + "/" + MinioBucket.BUCKET_CONFIG + "/images/book_cover_default.png" )
                 .build();
         // 返回
